@@ -9,290 +9,349 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchData();
+    fetchFeaturedProducts();
+    fetchCategories();
   }, []);
 
-  const fetchData = async () => {
+  const fetchFeaturedProducts = async () => {
     try {
-      const [productsRes, categoriesRes] = await Promise.all([
-        axios.get('/api/products?featured=true&limit=8'),
-        axios.get('/api/categories')
-      ]);
-      
-      setFeaturedProducts(productsRes.data.products || []);
-      setCategories(categoriesRes.data || []);
+      const response = await axios.get('/api/products?featured=true&limit=8');
+      setFeaturedProducts(response.data.products);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching featured products:', error);
     } finally {
       setLoading(false);
     }
   };
 
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get('/api/categories');
+      setCategories(response.data.slice(0, 12));
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center hero-gradient text-white">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 bg-pattern opacity-10"></div>
-        
-        {/* Floating Orbs */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(6)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-64 h-64 bg-white opacity-5 rounded-full animate-pulse"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${i * 0.5}s`,
-                animationDuration: `${3 + Math.random() * 2}s`
-              }}
-            />
-          ))}
-        </div>
+      {/* Top Banner */}
+      <div className="bg-gradient-to-r from-red-600 to-pink-600 text-white text-center py-2 text-sm font-medium">
+        🔥 Flash Sale - Up to 75% OFF on Selected Items! Limited Time Only
+      </div>
 
-        {/* Hero Content */}
-        <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            {/* Live Badge */}
-            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full glass mb-8">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              <span className="text-sm font-medium">Now Live • Premium Shopping Experience</span>
+      {/* Main Hero Carousel */}
+      <section className="relative h-96 md:h-[500px] overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+          <div className="container h-full flex items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center w-full">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="text-white"
+              >
+                <h1 className="text-4xl md:text-6xl font-bold mb-4">
+                  All New For A<br />
+                  <span className="text-yellow-300">Better You</span>
+                </h1>
+                <p className="text-xl mb-6 text-blue-100">Amazing Discounts And Deals</p>
+                <p className="text-2xl font-bold mb-8">From NPR 900.00</p>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-white text-blue-600 px-8 py-3 rounded-full font-bold text-lg hover:bg-yellow-300 hover:text-blue-800 transition-all duration-300"
+                >
+                  Shop Now
+                </motion.button>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="hidden lg:block"
+              >
+                <div className="w-full h-80 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center text-white text-6xl font-bold">
+                  📱💻🎧
+                </div>
+              </motion.div>
             </div>
-
-            {/* Main Heading */}
-            <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight">
-              <span className="block">Glorious</span>
-              <span className="block text-gradient">Trade Hub</span>
-            </h1>
-
-            {/* Subtitle */}
-            <p className="text-xl md:text-2xl text-gray-100 mb-12 max-w-3xl mx-auto">
-              Experience the future of shopping with our curated collection of premium products. 
-              Discover, explore, and elevate your lifestyle.
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/products" className="btn btn-primary text-lg px-8 py-4">
-                <i className="fas fa-shopping-bag"></i>
-                Explore Collection
-              </Link>
-              <Link to="/products?featured=true" className="btn btn-outline text-lg px-8 py-4">
-                <i className="fas fa-star"></i>
-                Featured Items
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>
       </section>
 
-      {/* Categories Section */}
-      <section className="py-24 bg-white">
+      {/* Today's Deal Hot Section */}
+      <section className="py-4 bg-gradient-to-r from-red-500 to-pink-500">
         <div className="container">
-          <div className="text-center mb-16">
-            <div className="inline-block px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-semibold mb-4">
-              Shop by Category
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Discover Your
-              <span className="block text-gradient">Perfect Match</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Browse through our carefully curated categories to find exactly what you're looking for
-            </p>
+          <div className="flex items-center justify-center">
+            <span className="text-white font-bold text-lg mr-4">🔥 Today's Deal</span>
+            <span className="bg-yellow-400 text-red-600 px-4 py-1 rounded-full font-bold text-sm animate-pulse">
+              HOT
+            </span>
           </div>
+        </div>
+      </section>
 
-          {loading ? (
-            <div className="category-grid">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="text-center">
-                  <div className="w-20 h-20 skeleton rounded-2xl mx-auto mb-4"></div>
-                  <div className="h-4 skeleton rounded mb-2"></div>
-                  <div className="h-3 skeleton rounded"></div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="category-grid">
-              {categories.slice(0, 6).map((category) => (
-                <motion.div
-                  key={category.id}
-                  whileHover={{ scale: 1.05, y: -10 }}
-                  className="text-center group cursor-pointer"
-                >
-                  <Link to={`/products?category=${category.id}`}>
-                    <div className="relative mb-4">
-                      <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl mx-auto flex items-center justify-center text-blue-600 text-2xl group-hover:shadow-xl transition-all duration-500 group-hover:bg-gradient-to-br group-hover:from-blue-500 group-hover:to-purple-600 group-hover:text-white">
-                        <i className="fas fa-cube"></i>
-                      </div>
+      {/* Product Categories Grid */}
+      <section className="py-12 bg-gray-50">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-center mb-8"
+          >
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Shop Categories</h2>
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {[
+              { name: 'CCTV Camera', icon: '📹', color: 'from-blue-500 to-blue-600' },
+              { name: 'Speaker', icon: '🔊', color: 'from-green-500 to-green-600' },
+              { name: 'Laptop', icon: '💻', color: 'from-purple-500 to-purple-600' },
+              { name: 'Headphone', icon: '🎧', color: 'from-red-500 to-red-600' },
+              { name: 'Mouse', icon: '🖱️', color: 'from-yellow-500 to-yellow-600' },
+              { name: 'Keyboard', icon: '⌨️', color: 'from-indigo-500 to-indigo-600' },
+              { name: 'Calculator', icon: '🧮', color: 'from-pink-500 to-pink-600' },
+              { name: 'USB', icon: '🔌', color: 'from-teal-500 to-teal-600' },
+              { name: 'SSD', icon: '💾', color: 'from-orange-500 to-orange-600' },
+              { name: 'Telephone', icon: '📞', color: 'from-cyan-500 to-cyan-600' },
+              { name: 'CHARGER', icon: '🔋', color: 'from-lime-500 to-lime-600' },
+              { name: 'Tech Gift', icon: '🎁', color: 'from-rose-500 to-rose-600' }
+            ].map((category, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="group cursor-pointer"
+              >
+                <Link to={`/products?category=${category.name}`}>
+                  <div className="bg-white rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div className={`w-16 h-16 mx-auto mb-4 bg-gradient-to-r ${category.color} rounded-xl flex items-center justify-center text-white text-2xl`}>
+                      {category.icon}
                     </div>
-                    <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                    <h3 className="font-semibold text-gray-900 text-sm group-hover:text-blue-600 transition-colors">
                       {category.name}
                     </h3>
-                    <p className="text-sm text-gray-500">
-                      {category.description}
-                    </p>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          )}
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Featured Products Section */}
-      <section className="py-24 bg-gray-900 text-white">
-        <div className="absolute inset-0 bg-pattern opacity-5"></div>
-        
-        <div className="container relative z-10">
-          <div className="text-center mb-16">
-            <div className="inline-block px-4 py-2 bg-yellow-400/20 border border-yellow-400/30 rounded-full text-yellow-400 text-sm font-semibold mb-4">
-              ⭐ Featured Collection
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Handpicked
-              <span className="block bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
-                Just for You
-              </span>
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Discover our premium selection of the finest products, curated by our experts
-            </p>
+      {/* Heavy On Features Light On Price */}
+      <section className="py-16 bg-gradient-to-r from-indigo-600 to-purple-600">
+        <div className="container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="text-white"
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                Heavy On Features<br />
+                <span className="text-yellow-300">Light On Price</span>
+              </h2>
+              <p className="text-xl mb-8 text-indigo-100">AMAZING DISCOUNTS AND DEALS</p>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-yellow-400 text-indigo-800 px-8 py-3 rounded-full font-bold text-lg hover:bg-white transition-all duration-300"
+              >
+                shop now
+              </motion.button>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="hidden lg:block"
+            >
+              <div className="w-full h-80 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center text-white text-4xl font-bold">
+                💻📱⌚🎧
+              </div>
+            </motion.div>
           </div>
+        </div>
+      </section>
 
-          {loading ? (
-            <div className="product-grid">
-              {[...Array(8)].map((_, i) => (
-                <div key={i} className="bg-gray-800 rounded-2xl overflow-hidden">
-                  <div className="h-48 bg-gray-700 skeleton"></div>
-                  <div className="p-6">
-                    <div className="h-4 bg-gray-700 skeleton rounded mb-2"></div>
-                    <div className="h-3 bg-gray-700 skeleton rounded mb-4"></div>
-                    <div className="h-6 bg-gray-700 skeleton rounded"></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="product-grid">
-              {featuredProducts.map((product) => (
-                <motion.div
-                  key={product.id}
-                  whileHover={{ scale: 1.05, y: -10 }}
-                  className="group cursor-pointer"
-                >
-                  <Link to={`/products/${product.id}`}>
-                    <div className="bg-gray-800 border border-gray-700 rounded-2xl overflow-hidden hover:border-gray-600 transition-all duration-500" style={{backgroundColor: 'rgba(31, 41, 55, 0.5)'}}>
-                      <div className="relative overflow-hidden">
-                        {product.images && JSON.parse(product.images).length > 0 ? (
-                          <img
-                            src={`/uploads/${JSON.parse(product.images)[0]}`}
-                            alt={product.name}
-                            className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"
-                          />
-                        ) : (
-                          <div className="w-full h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-lg">
-                            {product.name}
-                          </div>
-                        )}
-                        <div className="absolute top-3 left-3 bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-3 py-1 rounded-full text-xs font-bold">
-                          ⭐ Featured
-                        </div>
-                      </div>
-                      <div className="p-6">
-                        <h3 className="font-semibold text-white mb-2 group-hover:text-blue-400 transition-colors">
-                          {product.name}
-                        </h3>
-                        <p className="text-gray-400 text-sm mb-4 line-clamp-2">
-                          {product.description}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-2xl font-bold text-gradient">
-                            ${parseFloat(product.price).toFixed(2)}
-                          </span>
-                          <span className={`badge ${
-                            product.stock_quantity > 0 ? 'badge-success' : 'badge-error'
-                          }`}>
-                            {product.stock_quantity > 0 ? 'In Stock' : 'Out of Stock'}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          )}
+      {/* Promotional Cards Section */}
+      <section className="py-16 bg-white">
+        <div className="container">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Get Best Computer Accessories */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl p-8 text-white relative overflow-hidden"
+            >
+              <div className="relative z-10">
+                <p className="text-sm font-medium mb-2">NEW PRODUCT</p>
+                <h3 className="text-2xl font-bold mb-4">Get Best Computer Accessories</h3>
+                <p className="text-green-100 mb-6">RELEASE DATE & PRICE</p>
+                <button className="bg-white text-green-600 px-6 py-2 rounded-full font-bold hover:bg-yellow-300 transition-all duration-300">
+                  Shop Now
+                </button>
+              </div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white bg-opacity-20 rounded-full -mr-16 -mt-16"></div>
+            </motion.div>
 
-          <div className="text-center mt-16">
-            <Link to="/products" className="btn btn-primary text-lg px-8 py-4">
-              View All Products
-              <i className="fas fa-arrow-right"></i>
-            </Link>
+            {/* Exclusive Headphone */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-gradient-to-br from-red-500 to-pink-600 rounded-2xl p-8 text-white relative overflow-hidden"
+            >
+              <div className="relative z-10">
+                <p className="text-sm font-medium mb-2">EXCLUSIVE HEADPHONE</p>
+                <h3 className="text-2xl font-bold mb-4">Discounts 50% On All Headphone</h3>
+                <button className="bg-white text-red-600 px-6 py-2 rounded-full font-bold hover:bg-yellow-300 transition-all duration-300">
+                  shop now
+                </button>
+              </div>
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-white bg-opacity-20 rounded-full -ml-12 -mb-12"></div>
+            </motion.div>
+
+            {/* Get Latest Product */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-8 text-white relative overflow-hidden"
+            >
+              <div className="relative z-10">
+                <p className="text-sm font-medium mb-2">NEW PRODUCT</p>
+                <h3 className="text-2xl font-bold mb-4">Get latest Product</h3>
+                <p className="text-blue-100 mb-6">TODAY'S SUPER OFFER</p>
+                <button className="bg-white text-blue-600 px-6 py-2 rounded-full font-bold hover:bg-yellow-300 transition-all duration-300">
+                  Shop Now
+                </button>
+              </div>
+              <div className="absolute top-0 left-0 w-20 h-20 bg-white bg-opacity-20 rounded-full -ml-10 -mt-10"></div>
+            </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Big Sale Section */}
+      <section className="py-20 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500">
+        <div className="container text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            className="text-white"
+          >
+            <p className="text-lg font-medium mb-2">BIG SALE</p>
+            <h2 className="text-5xl md:text-6xl font-bold mb-4">Biggest Discount</h2>
+            <p className="text-3xl font-bold mb-8">UP TO 75% OFF</p>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-white text-red-600 px-12 py-4 rounded-full font-bold text-xl hover:bg-yellow-300 transition-all duration-300"
+            >
+              Shop Now
+            </motion.button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Weekend Deal & Summer Sale */}
+      <section className="py-16 bg-gray-50">
+        <div className="container">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Weekend Deal */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl p-8 text-white"
+            >
+              <p className="text-sm font-medium mb-2">WEEKEND DEAL</p>
+              <h3 className="text-3xl font-bold mb-4">The Great Sale</h3>
+              <p className="text-purple-100 mb-6">Get Free Coupon code</p>
+              <button className="bg-white text-purple-600 px-6 py-2 rounded-full font-bold hover:bg-yellow-300 transition-all duration-300">
+                Get Coupon
+              </button>
+            </motion.div>
+
+            {/* Summer Sale */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl p-8 text-white"
+            >
+              <p className="text-sm font-medium mb-2">MONTH DEAL</p>
+              <h3 className="text-3xl font-bold mb-4">Summer Clean Sale</h3>
+              <p className="text-2xl font-bold mb-6">UP TO 45% OFF</p>
+              <button className="bg-white text-teal-600 px-6 py-2 rounded-full font-bold hover:bg-yellow-300 transition-all duration-300">
+                Shop Now
+              </button>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <section className="py-16 bg-gradient-to-r from-indigo-600 to-blue-600">
+        <div className="container text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-white max-w-2xl mx-auto"
+          >
+            <h3 className="text-3xl font-bold mb-4">Sign Up For Newsletter & Get 20% Off</h3>
+            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 px-4 py-3 rounded-full text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              />
+              <button className="bg-yellow-400 text-indigo-800 px-8 py-3 rounded-full font-bold hover:bg-white transition-all duration-300">
+                Subscribe
+              </button>
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-24 bg-white">
+      <section className="py-16 bg-white">
         <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Why Choose
-              <span className="block text-gradient">Glorious Trade Hub?</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We're committed to providing you with an exceptional shopping experience
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
               {
-                icon: 'fas fa-shipping-fast',
-                title: 'Lightning Fast Delivery',
-                description: 'Get your orders delivered in record time with our premium shipping network',
-                gradient: 'from-blue-500 to-cyan-500'
+                icon: "🚚",
+                title: "Free Delivery",
+                description: "Free shipping on all order"
               },
               {
-                icon: 'fas fa-shield-alt',
-                title: 'Bank-Level Security',
-                description: 'Your data and payments are protected with military-grade encryption',
-                gradient: 'from-green-500 to-emerald-500'
+                icon: "↩️",
+                title: "Returns",
+                description: "Back guarantee under 7 days"
               },
               {
-                icon: 'fas fa-headset',
-                title: '24/7 Premium Support',
-                description: 'Our expert team is always ready to help you with anything you need',
-                gradient: 'from-purple-500 to-pink-500'
+                icon: "🎧",
+                title: "Support 24/7",
+                description: "Support online 24 hours a day"
+              },
+              {
+                icon: "💳",
+                title: "payments",
+                description: "100% payment security"
               }
             ].map((feature, index) => (
               <motion.div
                 key={index}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="feature-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="text-center p-6"
               >
-                <div className={`w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-2xl mx-auto mb-6 flex items-center justify-center text-white text-2xl group-hover:scale-110 transition-transform duration-500`}>
-                  <i className={feature.icon}></i>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600">
-                  {feature.description}
-                </p>
+                <div className="text-5xl mb-4">{feature.icon}</div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
+                <p className="text-gray-600">{feature.description}</p>
               </motion.div>
             ))}
           </div>
