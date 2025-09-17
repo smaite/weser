@@ -1,0 +1,261 @@
+import React, { useState, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import axios from 'axios';
+import { useCart } from '../context/CartContext';
+
+const Products = () => {
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [filters, setFilters] = useState({
+    search: searchParams.get('search') || '',
+    category: searchParams.get('category') || '',
+    featured: searchParams.get('featured') || ''
+  });
+  const [pagination, setPagination] = useState({});
+
+  const { addToCart } = useCart();
+
+  useEffect(() => {
+    fetchProducts();
+    fetchCategories();
+  }, [searchParams]);
+
+  const fetchProducts = async () => {
+    setLoading(true);
+    try {
+      const params = new URLSearchParams(searchParams);
+      const response = await axios.get(`/api/products?${params.toString()}`);
+      setProducts(response.data.products);
+      setPagination(response.data.pagination);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get('/api/categories');
+      setCategories(response.data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  const handleFilterChange = (key, value) => {
+    const newFilters = { ...filters, [key]: value };
+    setFilters(newFilters);
+    
+    const params = new URLSearchParams();
+    Object.entries(newFilters).forEach(([k, v]) => {
+      if (v) params.set(k, v);
+    });
+    
+    setSearchParams(params);
+  };
+
+  const handleAddToCart = async (productId) => {
+    await addToCart(productId, 1);
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="container">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Our Products
+          </h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Discover our wide range of quality products at great prices
+          </p>
+        </div>
+
+        {/* Filters */}
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Search */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Search Products
+              </label>
+              <input
+                type="text"
+                value={filters.search}
+                onChange={(e) => handleFilterChange('search', e.target.value)}
+                placeholder="Search products..."
+                className="form-input"
+              />
+            </div>
+
+            {/* Category Filter */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Category
+              </label>
+              <select
+                value={filters.category}
+                onChange={(e) => handleFilterChange('category', e.target.value)}
+                className="form-input"
+              >
+                <option value="">All Categories</option>
+                {categories.map(category => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Featured Filter */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Filter
+              </label>
+              <select
+                value={filters.featured}
+                onChange={(e) => handleFilterChange('featured', e.target.value)}
+                className="form-input"
+              >
+                <option value="">All Products</option>
+                <option value="true">Featured Only</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Products Grid */}
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {[...Array(12)].map((_, i) => (
+              <div key={i} className="card">
+                <div className="h-48 bg-gray-200 skeleton"></div>
+                <div className="p-4">
+                  <div className="h-4 bg-gray-200 rounded skeleton mb-2"></div>
+                  <div className="h-3 bg-gray-200 rounded skeleton mb-4"></div>
+                  <div className="h-6 bg-gray-200 rounded skeleton"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : products.length > 0 ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          >
+            {products.map((product) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.02, y: -5 }}
+                className="card group"
+              >
+                <div className="relative overflow-hidden">
+                  {product.images && product.images.length > 0 ? (
+                    <img
+                      src={`/uploads/${JSON.parse(product.images)[0]}`}
+                      alt={product.name}
+                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                  ) : (
+                    <div className="w-full h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-lg">
+                      {product.name}
+                    </div>
+                  )}
+                  {product.featured && (
+                    <div className="absolute top-2 left-2 bg-yellow-400 text-yellow-900 px-2 py-1 rounded-full text-xs font-semibold">
+                      <i className="fas fa-star mr-1"></i>
+                      Featured
+                    </div>
+                  )}
+                  {product.stock_quantity === 0 && (
+                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                      <span className="text-white font-semibold">Out of Stock</span>
+                    </div>
+                  )}
+                </div>
+                <div className="p-4">
+                  <Link to={`/products/${product.id}`}>
+                    <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-primary-color transition-colors">
+                      {product.name}
+                    </h3>
+                  </Link>
+                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                    {product.description}
+                  </p>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xl font-bold text-primary-color">
+                      ${parseFloat(product.price).toFixed(2)}
+                    </span>
+                    <span className={`text-sm ${product.stock_quantity > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                      {product.stock_quantity > 0 ? `${product.stock_quantity} in stock` : 'Out of Stock'}
+                    </span>
+                  </div>
+                  <div className="flex space-x-2">
+                    <Link
+                      to={`/products/${product.id}`}
+                      className="btn btn-outline flex-1 text-sm"
+                    >
+                      View Details
+                    </Link>
+                    <button
+                      onClick={() => handleAddToCart(product.id)}
+                      disabled={product.stock_quantity === 0}
+                      className="btn btn-primary flex-1 text-sm"
+                    >
+                      <i className="fas fa-cart-plus mr-1"></i>
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        ) : (
+          <div className="text-center py-12">
+            <i className="fas fa-search text-6xl text-gray-300 mb-4"></i>
+            <h3 className="text-xl font-semibold text-gray-600 mb-2">No Products Found</h3>
+            <p className="text-gray-500">Try adjusting your search or filter criteria</p>
+          </div>
+        )}
+
+        {/* Pagination */}
+        {pagination.pages > 1 && (
+          <div className="flex justify-center mt-8">
+            <nav className="flex space-x-2">
+              {[...Array(pagination.pages)].map((_, i) => {
+                const page = i + 1;
+                const isActive = page === pagination.page;
+                return (
+                  <button
+                    key={page}
+                    onClick={() => {
+                      const params = new URLSearchParams(searchParams);
+                      params.set('page', page.toString());
+                      setSearchParams(params);
+                    }}
+                    className={`px-4 py-2 rounded-md transition-colors ${
+                      isActive
+                        ? 'bg-primary-color text-white'
+                        : 'bg-white text-gray-700 hover:bg-gray-100'
+                    }`}
+                  >
+                    {page}
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Products;
