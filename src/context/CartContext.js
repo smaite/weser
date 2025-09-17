@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/axios';
 import toast from 'react-hot-toast';
 import { useAuth } from './AuthContext';
 
@@ -32,7 +32,7 @@ export const CartProvider = ({ children }) => {
     
     setLoading(true);
     try {
-      const response = await axios.get('/api/cart');
+      const response = await api.get('/api/cart');
       setCartItems(response.data);
     } catch (error) {
       console.error('Error fetching cart items:', error);
@@ -49,7 +49,7 @@ export const CartProvider = ({ children }) => {
     }
 
     try {
-      await axios.post('/api/cart', { product_id: productId, quantity });
+      await api.post('/api/cart', { product_id: productId, quantity });
       await fetchCartItems();
       toast.success('Item added to cart!');
       return true;
@@ -64,7 +64,7 @@ export const CartProvider = ({ children }) => {
     if (!isAuthenticated()) return false;
 
     try {
-      await axios.put(`/api/cart/${cartItemId}`, { quantity });
+      await api.put(`/api/cart/${cartItemId}`, { quantity });
       await fetchCartItems();
       return true;
     } catch (error) {
@@ -78,7 +78,7 @@ export const CartProvider = ({ children }) => {
     if (!isAuthenticated()) return false;
 
     try {
-      await axios.delete(`/api/cart/${cartItemId}`);
+      await api.delete(`/api/cart/${cartItemId}`);
       await fetchCartItems();
       toast.success('Item removed from cart');
       return true;

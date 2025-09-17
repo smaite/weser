@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import api from '../utils/axios';
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -15,7 +15,7 @@ const Home = () => {
 
   const fetchFeaturedProducts = async () => {
     try {
-      const response = await axios.get('/api/products?featured=true&limit=8');
+      const response = await api.get('/api/products?featured=true&limit=8');
       setFeaturedProducts(Array.isArray(response.data.products) ? response.data.products : []);
     } catch (error) {
       console.error('Error fetching featured products:', error);
@@ -27,7 +27,7 @@ const Home = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('/api/categories');
+      const response = await api.get('/api/categories');
       setCategories(Array.isArray(response.data) ? response.data.slice(0, 12) : []);
     } catch (error) {
       console.error('Error fetching categories:', error);

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/axios';
 import toast from 'react-hot-toast';
+import { clearAuthData, getStoredUser, getStoredToken, setAuthData } from '../utils/localStorage';
 
 const AuthContext = createContext();
 
@@ -15,35 +16,37 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [token, setToken] = useState(getStoredToken());
 
   // Configure axios defaults
   useEffect(() => {
     if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } else {
-      delete axios.defaults.headers.common['Authorization'];
+      delete api.defaults.headers.common['Authorization'];
     }
   }, [token]);
 
   // Check if user is logged in on app start
   useEffect(() => {
     const checkAuth = async () => {
-      const storedToken = localStorage.getItem('token');
-      const storedUser = localStorage.getItem('user');
-      
-      if (storedToken && storedUser) {
-        try {
+      try {
+        const storedToken = getStoredToken();
+        const storedUser = getStoredUser();
+        
+        if (storedToken && storedUser) {
           setToken(storedToken);
-          setUser(JSON.parse(storedUser));
-          axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
-        } catch (error) {
-          console.error('Error parsing stored user:', error);
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
+          setUser(storedUser);
+          api.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+        } else {
+          clearAuthData();
         }
+      } catch (error) {
+        console.error('Error in checkAuth:', error);
+        clearAuthData();
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     checkAuth();
@@ -51,14 +54,13 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('/api/auth/login', { email, password });
+      const response = await api.post('/api/auth/login', { email, password });
       const { token: newToken, user: userData } = response.data;
       
       setToken(newToken);
       setUser(userData);
-      localStorage.setItem('token', newToken);
-      localStorage.setItem('user', JSON.stringify(userData));
-      axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+      setAuthData(newToken, userData);
+      api.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
       
       toast.success('Login successful!');
       return { success: true };
@@ -71,14 +73,13 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const response = await axios.post('/api/auth/register', userData);
+      const response = await api.post('/api/auth/register', userData);
       const { token: newToken, user: newUser } = response.data;
       
       setToken(newToken);
       setUser(newUser);
-      localStorage.setItem('token', newToken);
-      localStorage.setItem('user', JSON.stringify(newUser));
-      axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+      setAuthData(newToken, newUser);
+      api.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
       
       toast.success('Registration successful!');
       return { success: true };
@@ -92,15 +93,14 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setToken(null);
     setUser(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    delete axios.defaults.headers.common['Authorization'];
+    clearAuthData();
+    delete api.defaults.headers.common['Authorization'];
     toast.success('Logged out successfully');
   };
 
   const updateUser = (updatedUser) => {
     setUser(updatedUser);
-    localStorage.setItem('user', JSON.stringify(updatedUser));
+    setAuthData(token, updatedUser);
   };
 
   const isAdmin = () => {

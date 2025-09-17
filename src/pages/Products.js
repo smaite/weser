@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import api from '../utils/axios';
 import { useCart } from '../context/CartContext';
 
 const Products = () => {
@@ -27,11 +27,13 @@ const Products = () => {
     setLoading(true);
     try {
       const params = new URLSearchParams(searchParams);
-      const response = await axios.get(`/api/products?${params.toString()}`);
-      setProducts(response.data.products);
-      setPagination(response.data.pagination);
+      const response = await api.get(`/api/products?${params.toString()}`);
+      setProducts(response.data.products || []);
+      setPagination(response.data.pagination || {});
     } catch (error) {
       console.error('Error fetching products:', error);
+      setProducts([]);
+      setPagination({});
     } finally {
       setLoading(false);
     }
@@ -39,10 +41,11 @@ const Products = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('/api/categories');
-      setCategories(response.data);
+      const response = await api.get('/api/categories');
+      setCategories(response.data || []);
     } catch (error) {
       console.error('Error fetching categories:', error);
+      setCategories([]);
     }
   };
 
