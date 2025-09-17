@@ -16,9 +16,10 @@ const Home = () => {
   const fetchFeaturedProducts = async () => {
     try {
       const response = await axios.get('/api/products?featured=true&limit=8');
-      setFeaturedProducts(response.data.products);
+      setFeaturedProducts(Array.isArray(response.data.products) ? response.data.products : []);
     } catch (error) {
       console.error('Error fetching featured products:', error);
+      setFeaturedProducts([]); // Set empty array on error
     } finally {
       setLoading(false);
     }
@@ -27,9 +28,10 @@ const Home = () => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get('/api/categories');
-      setCategories(response.data.slice(0, 12));
+      setCategories(Array.isArray(response.data) ? response.data.slice(0, 12) : []);
     } catch (error) {
       console.error('Error fetching categories:', error);
+      setCategories([]); // Set empty array on error
     }
   };
 
