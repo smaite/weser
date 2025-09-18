@@ -42,7 +42,11 @@ const Products = () => {
   const fetchCategories = async () => {
     try {
       const response = await api.get('/api/categories');
-      setCategories(response.data || []);
+      // Ensure categories is always an array
+      const categoriesData = Array.isArray(response.data)
+        ? response.data
+        : (Array.isArray(response.data?.categories) ? response.data.categories : []);
+      setCategories(categoriesData);
     } catch (error) {
       console.error('Error fetching categories:', error);
       setCategories([]);
@@ -106,7 +110,7 @@ const Products = () => {
                 className="form-input"
               >
                 <option value="">All Categories</option>
-                {categories.map(category => (
+                {(Array.isArray(categories) ? categories : []).map(category => (
                   <option key={category.id} value={category.id}>
                     {category.name}
                   </option>
