@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import api from '../utils/axios';
@@ -8,6 +8,7 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const [filters, setFilters] = useState({
     search: searchParams.get('search') || '',
@@ -18,6 +19,49 @@ const Products = () => {
 
   const { addToCart } = useCart();
 
+  const toArray = (value, key) => {
+    if (Array.isArray(value)) return value;
+    if (value && Array.isArray(value[key])) return value[key];
+    return [];
+  };
+
+  const parseImagesToArray = (imagesField) => {
+    try {
+      if (!imagesField) return [];
+      if (Array.isArray(imagesField)) return imagesField;
+      if (typeof imagesField === 'string') {
+        const trimmed = imagesField.trim();
+        if (!trimmed) return [];
+        if ((trimmed.startsWith('[') && trimmed.endsWith(']')) || (trimmed.startsWith('{') && trimmed.endsWith('}'))) {
+          const parsed = JSON.parse(trimmed);
+          return Array.isArray(parsed) ? parsed : [];
+        }
+        if (trimmed.includes(',')) {
+          return trimmed.split(',').map(s => s.trim()).filter(Boolean);
+        }
+        return [trimmed];
+      }
+      if (typeof imagesField === 'object') {
+        // mysql JSON might come as Buffer in some environments
+        if (imagesField.data) {
+          const asString = Buffer.from(imagesField.data).toString('utf8');
+          return parseImagesToArray(asString);
+        }
+      }
+      return [];
+    } catch (e) {
+      return [];
+    }
+  };
+
+  const getProductPrimaryImage = (product) => {
+    const imgs = parseImagesToArray(product?.images);
+    const first = imgs[0];
+    if (!first) return '';
+    const base = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000';
+    return `${base}/uploads/${first}`;
+  };
+
   useEffect(() => {
     fetchProducts();
     fetchCategories();
@@ -26,12 +70,15 @@ const Products = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
+      setError('');
       const params = new URLSearchParams(searchParams);
       const response = await api.get(`/api/products?${params.toString()}`);
-      setProducts(response.data.products || []);
-      setPagination(response.data.pagination || {});
+      const productsData = toArray(response.data, 'products');
+      setProducts(productsData);
+      setPagination(response.data?.pagination || {});
     } catch (error) {
       console.error('Error fetching products:', error);
+      setError(error?.response?.data?.message || 'Failed to load products');
       setProducts([]);
       setPagination({});
     } finally {
@@ -61,6 +108,8 @@ const Products = () => {
     Object.entries(newFilters).forEach(([k, v]) => {
       if (v) params.set(k, v);
     });
+    // Reset to first page when filters change
+    params.delete('page');
     
     setSearchParams(params);
   };
@@ -68,6 +117,16 @@ const Products = () => {
   const handleAddToCart = async (productId) => {
     await addToCart(productId, 1);
   };
+
+  const handleClearFilters = () => {
+    setFilters({ search: '', category: '', featured: '' });
+    const params = new URLSearchParams();
+    setSearchParams(params);
+  };
+
+  const hasFilters = useMemo(() => {
+    return Boolean(filters.search || filters.category || filters.featured);
+  }, [filters]);
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -133,6 +192,25 @@ const Products = () => {
               </select>
             </div>
           </div>
+
+          <div className="mt-4 flex items-center justify-between">
+            <div className="text-sm text-gray-600">
+              {pagination.total ? (
+                <span>
+                  Showing {(pagination.page - 1) * pagination.limit + 1}–{Math.min(pagination.page * pagination.limit, pagination.total)} of {pagination.total}
+                </span>
+              ) : null}
+            </div>
+            <div>
+              <button
+                onClick={handleClearFilters}
+                disabled={!hasFilters}
+                className={`btn btn-outline text-sm ${!hasFilters ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                Clear Filters
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Products Grid */}
@@ -149,6 +227,12 @@ const Products = () => {
               </div>
             ))}
           </div>
+        ) : error ? (
+          <div className="text-center py-12">
+            <i className="fas fa-exclamation-triangle text-6xl text-red-300 mb-4"></i>
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">Failed to load products</h3>
+            <p className="text-gray-500">{error}</p>
+          </div>
         ) : products.length > 0 ? (
           <motion.div
             initial={{ opacity: 0 }}
@@ -164,9 +248,9 @@ const Products = () => {
                 className="card group"
               >
                 <div className="relative overflow-hidden">
-                  {product.images && product.images.length > 0 ? (
+                  {parseImagesToArray(product.images).length > 0 ? (
                     <img
-                      src={`/uploads/${JSON.parse(product.images)[0]}`}
+                      src={getProductPrimaryImage(product)}
                       alt={product.name}
                       className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
                     />
