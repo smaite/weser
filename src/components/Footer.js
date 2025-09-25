@@ -99,15 +99,15 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <i className="fas fa-phone"></i>
-                <span>Available for inquiries</span>
+                <span>+977 9807540020</span>
               </div>
               <div className="flex items-center space-x-2">
                 <i className="fas fa-map-marker-alt"></i>
-                <span>Premium Electronics Store</span>
+                <span>Bhairahawa, Nepal Near Durga Mandir</span>
               </div>
               <div className="flex items-center space-x-2">
                 <i className="fas fa-clock"></i>
-                <span>Expert Tech Support Available</span>
+                <span>Sun - Fri: 9:00 AM - 6:00 PM</span>
               </div>
             </div>
           </div>

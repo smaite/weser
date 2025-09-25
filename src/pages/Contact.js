@@ -36,21 +36,21 @@ const Contact = () => {
   const contactInfo = [
     {
       title: 'Email Us',
-      info: 'support@glorioustradehub.com',
+      info: 'info@glorioustradehub.com',
       description: 'Send us an email anytime!',
       icon: '📧',
       gradient: 'from-blue-500 to-cyan-500'
     },
     {
       title: 'Call Us',
-      info: '+1 (555) 123-4567',
+      info: '+977 9807540020',
       description: '24/7 Customer Support',
       icon: '📞',
       gradient: 'from-green-500 to-emerald-500'
     },
     {
       title: 'Visit Us',
-      info: '123 Commerce Street, Tech City, TC 12345',
+      info: 'Bhairahawa, Nepal Near Durga Mandir',
       description: 'Our headquarters',
       icon: '📍',
       gradient: 'from-purple-500 to-pink-500'
@@ -298,7 +298,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="text-white font-semibold">Business Hours</p>
-                      <p className="text-gray-400">Mon - Fri: 9:00 AM - 6:00 PM</p>
+                      <p className="text-gray-400">Sun - Fri: 9:00 AM - 6:00 PM</p>
                     </div>
                   </div>
                   
@@ -317,8 +317,8 @@ const Contact = () => {
                       <span className="text-white text-xl">🌍</span>
                     </div>
                     <div>
-                      <p className="text-white font-semibold">Global Support</p>
-                      <p className="text-gray-400">50+ countries served</p>
+                      <p className="text-white font-semibold">Nepal Wide Support</p>
+                      <p className="text-gray-400">20+ cities served</p>
                     </div>
                   </div>
                 </div>

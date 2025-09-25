@@ -24,9 +24,9 @@ const About = () => {
   };
 
   const stats = [
-    { number: '10K+', label: 'Happy Customers', icon: '👥' },
-    { number: '5K+', label: 'Products', icon: '📦' },
-    { number: '50+', label: 'Countries', icon: '🌍' },
+    { number: '1000+', label: 'Happy Customers', icon: '👥' },
+    { number: '100+', label: 'Products', icon: '📦' },
+    { number: '20+', label: 'Cities', icon: '🌍' },
     { number: '24/7', label: 'Support', icon: '🛟' }
   ];
 

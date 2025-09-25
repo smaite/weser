@@ -148,47 +148,64 @@ const Home = () => {
             >
               <div className="relative w-full h-[600px] lg:h-[700px]">
                 {/* Main Hero Card */}
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 to-purple-900/80 rounded-3xl backdrop-blur-sm border border-purple-500/30 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 to-purple-900/80 rounded-3xl backdrop-blur-sm overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-indigo-600/10"></div>
                   
                   {/* Content */}
                   <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 text-center">
                     <motion.div
                       animate={{ 
-                        rotateY: [0, 10, 0, -10, 0],
-                        scale: [1, 1.05, 1, 1.05, 1]
+                        rotateY: [0, 5, 0, -5, 0],
+                        y: [0, -10, 0, -10, 0],
+                        scale: [1, 1.02, 1, 1.02, 1]
                       }}
                       transition={{ 
-                        duration: 8,
+                        duration: 6,
                         repeat: Infinity,
                         ease: "easeInOut"
                       }}
-                      className="text-8xl mb-8"
+                      className="mb-8 relative"
                     >
-                      📱💻🎧
+                      {/* Premium Headphone Image */}
+                      <div className="relative w-80 h-80 md:w-96 md:h-96 lg:w-[400px] lg:h-[400px] mx-auto">
+                        <img 
+                          src="/images/image-removebg-preview.png"
+                          alt="Premium Headphones"
+                          className="w-full h-full object-contain relative z-10"
+                          style={{ 
+                            filter: 'drop-shadow(0 0 30px rgba(139, 92, 246, 0.5)) drop-shadow(0 0 60px rgba(139, 92, 246, 0.3))',
+                            minWidth: '300px',
+                            minHeight: '300px'
+                          }}
+                        />
+                        {/* Enhanced background glow for better visibility */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-indigo-600/10 rounded-full blur-2xl scale-125"></div>
+                      </div>
+                      {/* Glowing effect behind the headphones */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full opacity-20 blur-3xl scale-75"></div>
                     </motion.div>
                     
                     <h3 className="text-3xl font-bold text-white mb-4">
-                      Latest Tech Collection
+                      Premium Audio Experience
                     </h3>
                     <p className="text-gray-300 mb-6 max-w-md">
-                      Premium Electronics • Gaming Gear • Smart Devices • Audio Equipment
+                      Professional Headphones • Crystal Clear Sound • Wireless Freedom • Studio Quality
                     </p>
                     
                     <div className="grid grid-cols-2 gap-4 w-full max-w-xs">
-                      <div className="bg-black/50 rounded-xl p-4 border border-purple-500/30">
+                      <div className="bg-black/50 rounded-xl p-4 hover:bg-black/70 transition-all duration-300">
                         <div className="text-2xl mb-2">📹</div>
                         <div className="text-sm text-gray-400">CCTV Systems</div>
                       </div>
-                      <div className="bg-black/50 rounded-xl p-4 border border-purple-500/30">
+                      <div className="bg-black/50 rounded-xl p-4 hover:bg-black/70 transition-all duration-300">
                         <div className="text-2xl mb-2">🎮</div>
                         <div className="text-sm text-gray-400">Gaming Gear</div>
                       </div>
-                      <div className="bg-black/50 rounded-xl p-4 border border-purple-500/30">
+                      <div className="bg-black/50 rounded-xl p-4 hover:bg-black/70 transition-all duration-300">
                         <div className="text-2xl mb-2">💻</div>
                         <div className="text-sm text-gray-400">Laptops</div>
                       </div>
-                      <div className="bg-black/50 rounded-xl p-4 border border-purple-500/30">
+                      <div className="bg-black/50 rounded-xl p-4 hover:bg-black/70 transition-all duration-300">
                         <div className="text-2xl mb-2">🔊</div>
                         <div className="text-sm text-gray-400">Audio</div>
                       </div>
@@ -509,7 +526,7 @@ const Home = () => {
             >
               <div className="relative z-10">
                 <p className="text-sm font-medium mb-2">EXCLUSIVE HEADPHONE</p>
-                <h3 className="text-2xl font-bold mb-4">Discounts 50% On All Headphone</h3>
+                <h3 className="text-2xl font-bold mb-4">Super bass Wireless headphones with Noise Cancelling</h3>
                 <button className="bg-white text-red-600 px-6 py-2 rounded-full font-bold hover:bg-purple-300 transition-all duration-300">
                   shop now
                 </button>
@@ -555,27 +572,27 @@ const Home = () => {
               Clearance<br />
               <span className="text-purple-400">Sales</span>
             </h2>
-            <p className="text-4xl font-bold mb-8 text-yellow-400">UP TO 75% OFF</p>
+            <p className="text-4xl font-bold mb-8 text-yellow-400">UP TO 40% OFF</p>
             <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
               Massive discounts on premium electronics, CCTV systems, laptops, and gaming accessories
-            </p>
+            only for dashain and tihar</p>
             <div className="mb-12">
               <p className="text-lg text-gray-400 mb-4">Hurry up! Deals end up :</p>
               <div className="flex justify-center space-x-6">
                 <div className="bg-gray-900 rounded-2xl p-6 border border-purple-600">
-                  <div className="text-4xl font-bold text-white">00</div>
+                  <div className="text-4xl font-bold text-white">07</div>
                   <div className="text-sm text-gray-400">Days</div>
                 </div>
                 <div className="bg-gray-900 rounded-2xl p-6 border border-purple-600">
-                  <div className="text-4xl font-bold text-white">00</div>
+                  <div className="text-4xl font-bold text-white">08</div>
                   <div className="text-sm text-gray-400">Hrs</div>
                 </div>
                 <div className="bg-gray-900 rounded-2xl p-6 border border-purple-600">
-                  <div className="text-4xl font-bold text-white">00</div>
+                  <div className="text-4xl font-bold text-white">08</div>
                   <div className="text-sm text-gray-400">Mins</div>
                 </div>
                 <div className="bg-gray-900 rounded-2xl p-6 border border-purple-600">
-                  <div className="text-4xl font-bold text-white">00</div>
+                  <div className="text-4xl font-bold text-white">08</div>
                   <div className="text-sm text-gray-400">Secs</div>
                 </div>
               </div>
@@ -647,7 +664,7 @@ const Home = () => {
                   </div>
                   <div>
                     <p className="font-semibold">Call Us</p>
-                    <p className="text-gray-400">Need help? Contact our support team</p>
+                    <p className="text-gray-400">Need help? +977 9807540020</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-4">
@@ -656,7 +673,7 @@ const Home = () => {
                   </div>
                   <div>
                     <p className="font-semibold">Email Support</p>
-                    <p className="text-gray-400">Get technical assistance via email</p>
+                    <p className="text-gray-400">info@glorioustradehub.com</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-4">
@@ -665,12 +682,12 @@ const Home = () => {
                   </div>
                   <div>
                     <p className="font-semibold">Visit Our Store</p>
-                    <p className="text-gray-400">Experience products in person</p>
+                    <p className="text-gray-400">Bhairahawa, Nepal Near Durga Mandir</p>
                   </div>
                 </div>
               </div>
             </motion.div>
-            <motion.div
+          <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               className="bg-gray-800 rounded-3xl p-8 border border-gray-700"
@@ -678,19 +695,19 @@ const Home = () => {
               <h4 className="text-2xl font-bold text-white mb-6 text-center">Stay Updated</h4>
               <p className="text-gray-400 text-center mb-6">Get notified about new products and exclusive deals</p>
               <div className="space-y-4">
-                <input
-                  type="email"
+              <input
+                type="email"
                   placeholder="Enter your email address"
                   className="w-full px-4 py-4 rounded-xl bg-gray-900 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
-                />
+              />
                 <button className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-bold hover:from-purple-700 hover:to-indigo-700 transition-all duration-300" style={{ boxShadow: '0 0 20px rgba(139, 92, 246, 0.4)' }}>
                   Subscribe to Updates
-                </button>
-              </div>
+              </button>
+            </div>
               <p className="text-xs text-gray-500 text-center mt-4">
                 * Get the latest product updates and tech news directly in your inbox
               </p>
-            </motion.div>
+          </motion.div>
           </div>
         </div>
       </section>
