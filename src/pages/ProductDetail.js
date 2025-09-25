@@ -1,58 +1,108 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import api from '../utils/axios';
+import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
+import api from '../utils/axios';
+import toast from 'react-hot-toast';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  const { addToCart } = useCart();
+  
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(0);
-  const { addToCart } = useCart();
+  const [addingToCart, setAddingToCart] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [relatedProducts, setRelatedProducts] = useState([]);
 
   useEffect(() => {
-    fetchProduct();
+    if (id) {
+      fetchProduct();
+    }
   }, [id]);
 
   const fetchProduct = async () => {
-    setLoading(true);
     try {
+      setLoading(true);
       const response = await api.get(`/api/products/${id}`);
       setProduct(response.data);
+      
+      // Fetch related products from the same category
+      if (response.data.category_id) {
+        fetchRelatedProducts(response.data.category_id, id);
+      }
     } catch (error) {
       console.error('Error fetching product:', error);
-      if (error.response?.status === 404) {
-        navigate('/products');
-      }
+      toast.error('Product not found');
+      navigate('/products');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleAddToCart = async () => {
-    const success = await addToCart(product.id, quantity);
-    if (success) {
-      setQuantity(1);
+  const fetchRelatedProducts = async (categoryId, currentProductId) => {
+    try {
+      const response = await api.get(`/api/products?category=${categoryId}&limit=4`);
+      const filtered = response.data.products?.filter(p => p.id !== parseInt(currentProductId)) || [];
+      setRelatedProducts(filtered.slice(0, 3));
+    } catch (error) {
+      console.error('Error fetching related products:', error);
     }
+  };
+
+  const handleAddToCart = async () => {
+    if (!isAuthenticated()) {
+      toast.error('Please login to add items to cart');
+      navigate('/login');
+      return;
+    }
+
+    if (quantity > product.stock_quantity) {
+      toast.error('Insufficient stock');
+      return;
+    }
+
+    setAddingToCart(true);
+    try {
+      const success = await addToCart(product.id, quantity);
+      if (success) {
+        toast.success(`${product.name} added to cart!`);
+      }
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      toast.error('Failed to add item to cart');
+    } finally {
+      setAddingToCart(false);
+    }
+  };
+
+  const handleBuyNow = async () => {
+    await handleAddToCart();
+    if (isAuthenticated()) {
+      navigate('/cart');
+    }
+  };
+
+  // Generate gradient placeholder for product image
+  const getGradientPlaceholder = (id) => {
+    const gradients = [
+      'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+      'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+      'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+      'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+    ];
+    return gradients[id % gradients.length];
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
-        <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="h-96 bg-gray-200 rounded-lg skeleton"></div>
-            <div className="space-y-4">
-              <div className="h-8 bg-gray-200 rounded skeleton"></div>
-              <div className="h-4 bg-gray-200 rounded skeleton"></div>
-              <div className="h-6 bg-gray-200 rounded skeleton w-1/3"></div>
-              <div className="h-20 bg-gray-200 rounded skeleton"></div>
-            </div>
-          </div>
-        </div>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="spinner"></div>
       </div>
     );
   }
@@ -65,7 +115,7 @@ const ProductDetail = () => {
           <p className="text-gray-600 mb-4">The product you're looking for doesn't exist.</p>
           <button
             onClick={() => navigate('/products')}
-            className="btn btn-primary"
+            className="btn-primary"
           >
             Back to Products
           </button>
@@ -74,151 +124,215 @@ const ProductDetail = () => {
     );
   }
 
-  const images = product.images ? JSON.parse(product.images) : [];
-
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container">
-        {/* Breadcrumb */}
-        <nav className="mb-8">
-          <ol className="flex items-center space-x-2 text-sm text-gray-500">
-            <li><a href="/" className="hover:text-primary-color">Home</a></li>
-            <li><i className="fas fa-chevron-right"></i></li>
-            <li><a href="/products" className="hover:text-primary-color">Products</a></li>
-            <li><i className="fas fa-chevron-right"></i></li>
-            <li className="text-gray-900">{product.name}</li>
-          </ol>
-        </nav>
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 py-8">
+        {/* Back Button */}
+        <motion.button
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          onClick={() => navigate(-1)}
+          className="flex items-center text-gray-600 hover:text-blue-600 mb-6 transition-colors"
+        >
+          <i className="fas fa-arrow-left mr-2"></i>
+          Back
+        </motion.button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Product Images */}
+          {/* Product Image */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             className="space-y-4"
           >
-            <div className="aspect-square bg-white rounded-lg shadow-sm overflow-hidden">
-              {images.length > 0 ? (
-                <img
-                  src={`/uploads/${images[selectedImage]}`}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold">
-                  {product.name}
-                </div>
-              )}
-            </div>
-            
-            {images.length > 1 && (
-              <div className="flex space-x-2 overflow-x-auto">
-                {images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedImage(index)}
-                    className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
-                      selectedImage === index ? 'border-primary-color' : 'border-gray-200'
-                    }`}
-                  >
-                    <img
-                      src={`/uploads/${image}`}
-                      alt={`${product.name} ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
+            <div className="aspect-square rounded-2xl overflow-hidden bg-white shadow-lg">
+              <div
+                className="w-full h-full flex items-center justify-center text-white text-6xl font-bold"
+                style={{ background: getGradientPlaceholder(product.id) }}
+              >
+                {product.name.charAt(0).toUpperCase()}
               </div>
-            )}
+            </div>
           </motion.div>
 
           {/* Product Info */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             className="space-y-6"
           >
-            <div>
-              {product.featured && (
-                <div className="inline-flex items-center bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium mb-2">
-                  <i className="fas fa-star mr-1"></i>
-                  Featured Product
-                </div>
-              )}
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
-              <p className="text-gray-600">{product.category_name}</p>
-            </div>
+            {/* Category Badge */}
+            {product.category_name && (
+              <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
+                {product.category_name}
+              </span>
+            )}
 
-            <div className="text-4xl font-bold text-primary-color">
-              ${parseFloat(product.price).toFixed(2)}
-            </div>
+            {/* Product Title */}
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+              {product.name}
+            </h1>
 
-            <div className="prose max-w-none">
-              <p className="text-gray-700 leading-relaxed">{product.description}</p>
-            </div>
-
+            {/* Price */}
             <div className="flex items-center space-x-4">
-              <span className="text-sm font-medium text-gray-700">Stock:</span>
-              <span className={`text-sm font-semibold ${
-                product.stock_quantity > 0 ? 'text-green-600' : 'text-red-600'
+              <span className="text-4xl font-bold text-blue-600">
+                ${product.price}
+              </span>
+              {product.featured && (
+                <span className="px-3 py-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-sm font-bold rounded-full">
+                  Featured
+                </span>
+              )}
+            </div>
+
+            {/* Stock Status */}
+            <div className="flex items-center space-x-2">
+              <div className={`w-3 h-3 rounded-full ${
+                product.stock_quantity > 10 ? 'bg-green-500' :
+                product.stock_quantity > 0 ? 'bg-yellow-500' : 'bg-red-500'
+              }`}></div>
+              <span className={`font-medium ${
+                product.stock_quantity > 10 ? 'text-green-600' :
+                product.stock_quantity > 0 ? 'text-yellow-600' : 'text-red-600'
               }`}>
-                {product.stock_quantity > 0 
-                  ? `${product.stock_quantity} available` 
-                  : 'Out of stock'
-                }
+                {product.stock_quantity > 10 ? 'In Stock' :
+                 product.stock_quantity > 0 ? `Only ${product.stock_quantity} left` : 'Out of Stock'}
               </span>
             </div>
 
+            {/* Description */}
+            <div className="prose prose-gray max-w-none">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
+              <p className="text-gray-700 leading-relaxed">
+                {product.description}
+              </p>
+            </div>
+
+            {/* Quantity Selector & Add to Cart */}
             {product.stock_quantity > 0 && (
               <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Quantity
-                  </label>
-                  <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-4">
+                  <label className="font-medium text-gray-700">Quantity:</label>
+                  <div className="flex items-center border border-gray-300 rounded-lg">
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+                      className="px-3 py-2 hover:bg-gray-100 transition-colors"
+                      disabled={quantity <= 1}
                     >
-                      <i className="fas fa-minus text-sm"></i>
+                      <i className="fas fa-minus"></i>
                     </button>
-                    <span className="w-12 text-center font-semibold">{quantity}</span>
+                    <span className="px-4 py-2 font-medium">{quantity}</span>
                     <button
                       onClick={() => setQuantity(Math.min(product.stock_quantity, quantity + 1))}
-                      className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+                      className="px-3 py-2 hover:bg-gray-100 transition-colors"
+                      disabled={quantity >= product.stock_quantity}
                     >
-                      <i className="fas fa-plus text-sm"></i>
+                      <i className="fas fa-plus"></i>
                     </button>
                   </div>
                 </div>
 
-                <div className="flex space-x-4">
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <button
                     onClick={handleAddToCart}
-                    className="btn btn-primary flex-1 text-lg py-3"
+                    disabled={addingToCart}
+                    className="flex-1 btn-primary flex items-center justify-center"
                   >
-                    <i className="fas fa-cart-plus mr-2"></i>
-                    Add to Cart
-                  </motion.button>
-                  <button className="btn btn-outline px-6">
-                    <i className="fas fa-heart"></i>
+                    {addingToCart ? (
+                      <>
+                        <div className="spinner mr-2"></div>
+                        Adding...
+                      </>
+                    ) : (
+                      <>
+                        <i className="fas fa-shopping-cart mr-2"></i>
+                        Add to Cart
+                      </>
+                    )}
+                  </button>
+                  <button
+                    onClick={handleBuyNow}
+                    disabled={addingToCart}
+                    className="flex-1 btn-secondary flex items-center justify-center"
+                  >
+                    <i className="fas fa-bolt mr-2"></i>
+                    Buy Now
                   </button>
                 </div>
               </div>
             )}
 
+            {/* Out of Stock Message */}
             {product.stock_quantity === 0 && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <div className="flex items-center">
-                  <i className="fas fa-exclamation-circle text-red-500 mr-2"></i>
-                  <span className="text-red-700 font-medium">This product is currently out of stock</span>
-                </div>
+              <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-800 font-medium">
+                  <i className="fas fa-exclamation-circle mr-2"></i>
+                  This product is currently out of stock.
+                </p>
               </div>
             )}
+
+            {/* Product Features */}
+            <div className="border-t pt-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Features</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex items-center space-x-2">
+                  <i className="fas fa-shipping-fast text-blue-600"></i>
+                  <span className="text-gray-700">Fast Shipping</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <i className="fas fa-undo text-blue-600"></i>
+                  <span className="text-gray-700">30-Day Returns</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <i className="fas fa-shield-alt text-blue-600"></i>
+                  <span className="text-gray-700">1 Year Warranty</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <i className="fas fa-headset text-blue-600"></i>
+                  <span className="text-gray-700">24/7 Support</span>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
+
+        {/* Related Products */}
+        {relatedProducts.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="mt-16"
+          >
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">Related Products</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {relatedProducts.map((relatedProduct) => (
+                <motion.div
+                  key={relatedProduct.id}
+                  whileHover={{ scale: 1.02 }}
+                  className="bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer"
+                  onClick={() => navigate(`/products/${relatedProduct.id}`)}
+                >
+                  <div
+                    className="h-48 flex items-center justify-center text-white text-2xl font-bold"
+                    style={{ background: getGradientPlaceholder(relatedProduct.id) }}
+                  >
+                    {relatedProduct.name.charAt(0).toUpperCase()}
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
+                      {relatedProduct.name}
+                    </h3>
+                    <p className="text-2xl font-bold text-blue-600">
+                      ${relatedProduct.price}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
       </div>
     </div>
   );

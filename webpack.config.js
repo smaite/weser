@@ -76,6 +76,14 @@ module.exports = (env, argv) => {
       ] : [])
     ],
     devtool: isProduction ? 'source-map' : 'eval-source-map',
+  
+  stats: {
+    errorDetails: true,
+    colors: true,
+    modules: false,
+    chunks: false,
+    chunkModules: false
+  },
     optimization: {
       splitChunks: isProduction ? {
         chunks: 'all',

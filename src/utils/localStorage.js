@@ -1,39 +1,9 @@
-// Utility functions for localStorage management
-
-export const clearAuthData = () => {
-  try {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    // Also clear any other auth-related data
-    localStorage.removeItem('cart');
-  } catch (error) {
-    console.error('Error clearing localStorage:', error);
-  }
-};
-
-export const getStoredUser = () => {
-  try {
-    const storedUser = localStorage.getItem('user');
-    if (!storedUser || storedUser === 'undefined' || storedUser === 'null') {
-      return null;
-    }
-    
-    const userData = JSON.parse(storedUser);
-    if (!userData || typeof userData !== 'object' || !userData.id) {
-      return null;
-    }
-    
-    return userData;
-  } catch (error) {
-    console.error('Error parsing stored user:', error);
-    return null;
-  }
-};
+// Safe localStorage utilities to handle edge cases
 
 export const getStoredToken = () => {
   try {
     const token = localStorage.getItem('token');
-    if (!token || token === 'undefined' || token === 'null') {
+    if (!token || token === 'null' || token === 'undefined') {
       return null;
     }
     return token;
@@ -43,11 +13,41 @@ export const getStoredToken = () => {
   }
 };
 
+export const getStoredUser = () => {
+  try {
+    const userStr = localStorage.getItem('user');
+    if (!userStr || userStr === 'null' || userStr === 'undefined') {
+      return null;
+    }
+    
+    const user = JSON.parse(userStr);
+    if (!user || typeof user !== 'object' || !user.id) {
+      return null;
+    }
+    
+    return user;
+  } catch (error) {
+    console.error('Error getting stored user:', error);
+    return null;
+  }
+};
+
 export const setAuthData = (token, user) => {
   try {
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
+    if (token && user) {
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+    }
   } catch (error) {
-    console.error('Error storing auth data:', error);
+    console.error('Error setting auth data:', error);
+  }
+};
+
+export const clearAuthData = () => {
+  try {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  } catch (error) {
+    console.error('Error clearing auth data:', error);
   }
 };

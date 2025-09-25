@@ -22,6 +22,8 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Orders from './pages/Orders';
 import Admin from './pages/Admin';
+import About from './pages/About';
+import Contact from './pages/Contact';
 
 // Route Protection
 import ProtectedRoute from './components/ProtectedRoute';
@@ -60,7 +62,7 @@ function App() {
             
             <Navbar />
             
-            <main className="flex-1">
+            <main className="flex-1 main-content">
               <AnimatePresence mode="wait">
                 <Routes>
                   <Route 
@@ -208,6 +210,34 @@ function App() {
                           <Admin />
                         </motion.div>
                       </AdminRoute>
+                    } 
+                  />
+                  
+                  <Route 
+                    path="/about" 
+                    element={
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <About />
+                      </motion.div>
+                    } 
+                  />
+                  
+                  <Route 
+                    path="/contact" 
+                    element={
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <Contact />
+                      </motion.div>
                     } 
                   />
                 </Routes>

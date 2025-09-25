@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
+import BottomNav from './BottomNav';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,14 +35,15 @@ const Navbar = () => {
   const cartItemsCount = getCartItemsCount();
 
   return (
+    <>
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
       className={`bg-white border-b border-gray-200 sticky top-0 z-50 ${scrolled ? 'shadow-lg' : ''}`}
     >
-      {/* Top banner */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center py-2 text-sm">
+      {/* Top banner - Hidden on mobile */}
+      <div className="hidden md:block bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center py-2 text-sm px-2">
         📞 Need Help? 071-590849 | 📧 [email protected] | 🚚 Free Delivery on All Orders
       </div>
       
@@ -72,6 +74,18 @@ const Navbar = () => {
               className={`nav-link ${isActiveLink('/products') ? 'active' : ''}`}
             >
               Products
+            </Link>
+            <Link
+              to="/about"
+              className={`nav-link ${isActiveLink('/about') ? 'active' : ''}`}
+            >
+              About
+            </Link>
+            <Link
+              to="/contact"
+              className={`nav-link ${isActiveLink('/contact') ? 'active' : ''}`}
+            >
+              Contact
             </Link>
             
             {/* Cart Icon */}
@@ -177,10 +191,10 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile menu button - Only show on tablet, hidden on mobile */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all duration-300"
+            className="hidden sm:block lg:hidden p-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all duration-300"
           >
             <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'} text-lg`}></i>
           </button>
@@ -312,6 +326,10 @@ const Navbar = () => {
         </AnimatePresence>
       </div>
     </motion.nav>
+
+      {/* Mobile Bottom Navigation */}
+      <BottomNav />
+    </>
   );
 };
 

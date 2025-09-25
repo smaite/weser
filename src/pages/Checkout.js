@@ -57,21 +57,21 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
+    <div className="min-h-screen bg-gray-50 py-4 sm:py-8">
+      <div className="container px-4">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-8">Checkout</h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
           {/* Checkout Form */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-white rounded-lg shadow-sm p-6"
+            className="bg-white rounded-lg shadow-sm p-4 sm:p-6"
           >
-            <h2 className="text-xl font-semibold text-gray-900 mb-6">Shipping Information</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Shipping Information</h2>
             
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="form-label">First Name</label>
                   <input
@@ -108,7 +108,7 @@ const Checkout = () => {
                 )}
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                   <label className="form-label">City</label>
                   <input
@@ -187,29 +187,29 @@ const Checkout = () => {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-white rounded-lg shadow-sm p-6"
+            className="bg-white rounded-lg shadow-sm p-4 sm:p-6"
           >
-            <h2 className="text-xl font-semibold text-gray-900 mb-6">Order Summary</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Order Summary</h2>
             
-            <div className="space-y-4 mb-6">
+            <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
               {cartItems.map((item) => (
-                <div key={item.id} className="flex items-center space-x-3">
+                <div key={item.id} className="flex items-center space-x-2 sm:space-x-3">
                   {item.images && item.images.length > 0 ? (
                     <img
-                      src={`/uploads/${JSON.parse(item.images)[0]}`}
+                      src={`${JSON.parse(item.images)[0]}`}
                       alt={item.name}
-                      className="w-12 h-12 object-cover rounded"
+                      className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded flex-shrink-0"
                     />
                   ) : (
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded flex items-center justify-center text-white text-xs font-semibold">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded flex items-center justify-center text-white text-xs font-semibold flex-shrink-0">
                       {item.name.substring(0, 2)}
                     </div>
                   )}
-                  <div className="flex-1">
-                    <h4 className="font-medium text-gray-900">{item.name}</h4>
-                    <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-medium text-gray-900 text-sm sm:text-base truncate">{item.name}</h4>
+                    <p className="text-xs sm:text-sm text-gray-600">Qty: {item.quantity}</p>
                   </div>
-                  <p className="font-semibold">
+                  <p className="font-semibold text-sm sm:text-base">
                     ${(parseFloat(item.price) * item.quantity).toFixed(2)}
                   </p>
                 </div>
