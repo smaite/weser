@@ -58,7 +58,7 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-black text-white">
       {/* Hero Section */}
       <motion.section 
         className="relative py-20 px-4 overflow-hidden"
@@ -129,12 +129,12 @@ const About = () => {
                 variants={itemVariants}
                 whileHover={{ scale: 1.05 }}
               >
-                <div className="relative p-8 rounded-2xl bg-white shadow-lg hover:shadow-xl border border-gray-200 hover:border-purple-400/50 transition-all duration-300">
+                <div className="relative p-8 rounded-2xl bg-gray-900 shadow-lg hover:shadow-xl border border-gray-200 hover:border-purple-400/50 transition-all duration-300">
                   <div className="text-4xl mb-4">{stat.icon}</div>
-                  <div className="text-4xl md:text-5xl font-bold text-gray-900 mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 group-hover:bg-clip-text transition-all duration-300">
+                  <div className="text-4xl md:text-5xl font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 group-hover:bg-clip-text transition-all duration-300">
                     {stat.number}
                   </div>
-                  <div className="text-gray-600 font-medium">{stat.label}</div>
+                  <div className="text-gray-400 font-medium">{stat.label}</div>
                 </div>
               </motion.div>
             ))}
@@ -153,7 +153,7 @@ const About = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <motion.div variants={itemVariants}>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
                 Our <span className="text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text">Story</span>
               </h2>
               <div className="space-y-6 text-gray-700 text-lg leading-relaxed">
@@ -177,7 +177,7 @@ const About = () => {
               className="relative"
               variants={itemVariants}
             >
-              <div className="relative p-8 rounded-3xl bg-white shadow-lg border border-gray-200">
+              <div className="relative p-8 rounded-3xl bg-gray-900 shadow-lg border border-gray-200">
                 <div className="aspect-square bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
                   <div className="text-white text-center">
                     <div className="text-6xl mb-4">🚀</div>
@@ -201,7 +201,7 @@ const About = () => {
       >
         <div className="max-w-6xl mx-auto">
           <motion.div className="text-center mb-16" variants={itemVariants}>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Our <span className="text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text">Values</span>
             </h2>
             <p className="text-xl text-gray-700 max-w-3xl mx-auto">
@@ -217,9 +217,9 @@ const About = () => {
                 variants={itemVariants}
                 whileHover={{ y: -10 }}
               >
-                <div className="relative p-8 rounded-2xl bg-white shadow-lg hover:shadow-xl border border-gray-200 hover:border-purple-400/50 transition-all duration-300">
+                <div className="relative p-8 rounded-2xl bg-gray-900 shadow-lg hover:shadow-xl border border-gray-200 hover:border-purple-400/50 transition-all duration-300">
                   <div className="text-4xl mb-4">{value.icon}</div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 group-hover:bg-clip-text transition-all duration-300">
+                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 group-hover:bg-clip-text transition-all duration-300">
                     {value.title}
                   </h3>
                   <p className="text-gray-700 leading-relaxed">
@@ -242,10 +242,10 @@ const About = () => {
       >
         <div className="max-w-4xl mx-auto text-center">
           <motion.div 
-            className="relative p-12 rounded-3xl bg-white shadow-lg border border-gray-200"
+            className="relative p-12 rounded-3xl bg-gray-900 shadow-lg border border-gray-200"
             variants={itemVariants}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
               Our <span className="text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text">Mission</span>
             </h2>
             <p className="text-xl md:text-2xl text-gray-700 leading-relaxed mb-8">

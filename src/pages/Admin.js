@@ -52,12 +52,12 @@ const AdminDashboard = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200"
+          className="bg-gray-900 rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-xs sm:text-sm font-medium">Total Users</p>
-              <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.totalUsers}</p>
+              <p className="text-gray-400 text-xs sm:text-sm font-medium">Total Users</p>
+              <p className="text-2xl sm:text-3xl font-bold text-white">{stats.totalUsers}</p>
             </div>
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-xl flex items-center justify-center">
               <i className="fas fa-users text-blue-600 text-lg sm:text-xl"></i>
@@ -69,12 +69,12 @@ const AdminDashboard = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200"
+          className="bg-gray-900 rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-xs sm:text-sm font-medium">Total Products</p>
-              <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.totalProducts}</p>
+              <p className="text-gray-400 text-xs sm:text-sm font-medium">Total Products</p>
+              <p className="text-2xl sm:text-3xl font-bold text-white">{stats.totalProducts}</p>
             </div>
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-xl flex items-center justify-center">
               <i className="fas fa-box text-green-600 text-lg sm:text-xl"></i>
@@ -86,12 +86,12 @@ const AdminDashboard = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200"
+          className="bg-gray-900 rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-xs sm:text-sm font-medium">Total Orders</p>
-              <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.totalOrders}</p>
+              <p className="text-gray-400 text-xs sm:text-sm font-medium">Total Orders</p>
+              <p className="text-2xl sm:text-3xl font-bold text-white">{stats.totalOrders}</p>
             </div>
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-xl flex items-center justify-center">
               <i className="fas fa-shopping-cart text-purple-600 text-lg sm:text-xl"></i>
@@ -103,12 +103,12 @@ const AdminDashboard = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200"
+          className="bg-gray-900 rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-600 text-xs sm:text-sm font-medium">Total Revenue</p>
-              <p className="text-2xl sm:text-3xl font-bold text-gray-900">${Number(stats.totalRevenue || 0).toFixed(2)}</p>
+              <p className="text-gray-400 text-xs sm:text-sm font-medium">Total Revenue</p>
+              <p className="text-2xl sm:text-3xl font-bold text-white">${Number(stats.totalRevenue || 0).toFixed(2)}</p>
             </div>
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
               <i className="fas fa-dollar-sign text-yellow-600 text-lg sm:text-xl"></i>
@@ -123,19 +123,19 @@ const AdminDashboard = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200"
+          className="bg-gray-900 rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200"
         >
-          <h3 className="text-xl font-bold text-gray-900 mb-4">Recent Orders</h3>
+          <h3 className="text-xl font-bold text-white mb-4">Recent Orders</h3>
           <div className="space-y-4">
             {stats.recentOrders.length > 0 ? (
               stats.recentOrders.map((order) => (
-                <div key={order.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div key={order.id} className="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
                   <div>
-                    <p className="font-medium text-gray-900">#{order.id}</p>
-                    <p className="text-sm text-gray-600">{order.user_name}</p>
+                    <p className="font-medium text-white">#{order.id}</p>
+                    <p className="text-sm text-gray-400">{order.user_name}</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-medium text-gray-900">${order.total_amount}</p>
+                    <p className="font-medium text-white">${order.total_amount}</p>
                     <span className={`inline-block px-2 py-1 text-xs rounded-full ${
                       order.status === 'delivered' ? 'bg-green-100 text-green-800' :
                       order.status === 'shipped' ? 'bg-blue-100 text-blue-800' :
@@ -159,16 +159,16 @@ const AdminDashboard = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200"
+          className="bg-gray-900 rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200"
         >
-          <h3 className="text-xl font-bold text-gray-900 mb-4">Low Stock Alert</h3>
+          <h3 className="text-xl font-bold text-white mb-4">Low Stock Alert</h3>
           <div className="space-y-4">
             {stats.lowStockProducts.length > 0 ? (
               stats.lowStockProducts.map((product) => (
                 <div key={product.id} className="flex items-center justify-between p-3 bg-red-50 rounded-lg">
                   <div>
-                    <p className="font-medium text-gray-900">{product.name}</p>
-                    <p className="text-sm text-gray-600">${product.price}</p>
+                    <p className="font-medium text-white">{product.name}</p>
+                    <p className="text-sm text-gray-400">${product.price}</p>
                   </div>
                   <div className="text-right">
                     <span className="inline-block px-3 py-1 bg-red-100 text-red-800 text-sm font-medium rounded-full">
@@ -239,25 +239,25 @@ const AdminUsers = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-900">User Management</h2>
+        <h2 className="text-2xl font-bold text-white">User Management</h2>
       </div>
 
       {/* Search */}
-      <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
+      <div className="bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-200">
         <div className="relative max-w-md">
           <input
             type="text"
             placeholder="Search users..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 border border-gray-300 focus:border-blue-500 focus:outline-none"
+            className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-800 border border-gray-300 focus:border-blue-500 focus:outline-none"
           />
           <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
         </div>
       </div>
 
       {/* Users Table */}
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+      <div className="bg-gray-900 rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center h-64">
             <div className="spinner"></div>
@@ -265,29 +265,29 @@ const AdminUsers = () => {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50">
+              <thead className="bg-gray-800">
                 <tr>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">User</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Email</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Role</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Joined</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Actions</th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-white">User</th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-white">Email</th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-white">Role</th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-white">Joined</th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-white">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {users.map((user) => (
-                  <tr key={user.id} className="hover:bg-gray-50">
+                  <tr key={user.id} className="hover:bg-gray-800">
                     <td className="px-6 py-4">
                       <div className="flex items-center">
                         <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
                           {user.name.charAt(0).toUpperCase()}
                         </div>
                         <div className="ml-3">
-                          <p className="font-medium text-gray-900">{user.name}</p>
+                          <p className="font-medium text-white">{user.name}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-gray-600">{user.email}</td>
+                    <td className="px-6 py-4 text-gray-400">{user.email}</td>
                     <td className="px-6 py-4">
                       <select
                         value={user.role}
@@ -298,7 +298,7 @@ const AdminUsers = () => {
                         <option value="admin">Admin</option>
                       </select>
                     </td>
-                    <td className="px-6 py-4 text-gray-600">
+                    <td className="px-6 py-4 text-gray-400">
                       {new Date(user.created_at).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4">
@@ -323,17 +323,17 @@ const AdminUsers = () => {
               <button
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="px-3 py-1 rounded-lg bg-gray-100 text-gray-600 disabled:opacity-50"
+                className="px-3 py-1 rounded-lg bg-gray-100 text-gray-400 disabled:opacity-50"
               >
                 Previous
               </button>
-              <span className="px-3 py-1 text-gray-600">
+              <span className="px-3 py-1 text-gray-400">
                 Page {currentPage} of {totalPages}
               </span>
               <button
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
-                className="px-3 py-1 rounded-lg bg-gray-100 text-gray-600 disabled:opacity-50"
+                className="px-3 py-1 rounded-lg bg-gray-100 text-gray-400 disabled:opacity-50"
               >
                 Next
               </button>
@@ -467,7 +467,7 @@ const AdminProducts = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Product Management</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-white">Product Management</h2>
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full lg:w-auto">
           <button
             onClick={() => {
@@ -545,7 +545,7 @@ const AdminProducts = () => {
       </AnimatePresence>
 
       {/* Filters */}
-      <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200">
+      <div className="bg-gray-900 rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="relative">
             <input
@@ -553,14 +553,14 @@ const AdminProducts = () => {
               placeholder="Search products..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 sm:py-3 rounded-xl bg-gray-50 border border-gray-300 focus:border-blue-500 focus:outline-none text-sm sm:text-base"
+              className="w-full pl-10 pr-4 py-2 sm:py-3 rounded-xl bg-gray-800 border border-gray-300 focus:border-blue-500 focus:outline-none text-sm sm:text-base"
             />
             <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
           </div>
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="px-4 py-2 sm:py-3 rounded-xl bg-gray-50 border border-gray-300 focus:border-blue-500 focus:outline-none text-sm sm:text-base"
+            className="px-4 py-2 sm:py-3 rounded-xl bg-gray-800 border border-gray-300 focus:border-blue-500 focus:outline-none text-sm sm:text-base"
           >
             <option value="">All Categories</option>
             {categories.map((category) => (
@@ -573,7 +573,7 @@ const AdminProducts = () => {
       </div>
 
       {/* Products Table */}
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+      <div className="bg-gray-900 rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center h-64">
             <div className="spinner"></div>
@@ -581,28 +581,28 @@ const AdminProducts = () => {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full min-w-[800px]">
-              <thead className="bg-gray-50">
+              <thead className="bg-gray-800">
                 <tr>
-                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-medium text-gray-900">Product</th>
-                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-medium text-gray-900 hidden sm:table-cell">Category</th>
-                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-medium text-gray-900">Price</th>
-                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-medium text-gray-900">Stock</th>
-                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-medium text-gray-900 hidden md:table-cell">Status</th>
-                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-medium text-gray-900">Actions</th>
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-medium text-white">Product</th>
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-medium text-white hidden sm:table-cell">Category</th>
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-medium text-white">Price</th>
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-medium text-white">Stock</th>
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-medium text-white hidden md:table-cell">Status</th>
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-medium text-white">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {products.map((product) => (
-                  <tr key={product.id} className="hover:bg-gray-50">
+                  <tr key={product.id} className="hover:bg-gray-800">
                     <td className="px-3 sm:px-6 py-3 sm:py-4">
                       <div>
-                        <p className="font-medium text-gray-900 text-sm sm:text-base">{product.name}</p>
-                        <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">{product.description}</p>
+                        <p className="font-medium text-white text-sm sm:text-base">{product.name}</p>
+                        <p className="text-xs sm:text-sm text-gray-400 line-clamp-2">{product.description}</p>
                         <p className="text-xs text-gray-500 sm:hidden mt-1">Cat: {product.category_name}</p>
                       </div>
                     </td>
-                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-gray-600 text-sm hidden sm:table-cell">{product.category_name}</td>
-                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-gray-900 font-medium text-sm sm:text-base">${product.price}</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-gray-400 text-sm hidden sm:table-cell">{product.category_name}</td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-white font-medium text-sm sm:text-base">${product.price}</td>
                     <td className="px-3 sm:px-6 py-3 sm:py-4">
                       <span className={`inline-block px-2 py-1 text-xs rounded-full ${
                         product.stock_quantity > 10 ? 'bg-green-100 text-green-800' :
@@ -649,17 +649,17 @@ const AdminProducts = () => {
               <button
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="px-3 py-1 rounded-lg bg-gray-100 text-gray-600 disabled:opacity-50"
+                className="px-3 py-1 rounded-lg bg-gray-100 text-gray-400 disabled:opacity-50"
               >
                 Previous
               </button>
-              <span className="px-3 py-1 text-gray-600">
+              <span className="px-3 py-1 text-gray-400">
                 Page {currentPage} of {totalPages}
               </span>
               <button
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
-                className="px-3 py-1 rounded-lg bg-gray-100 text-gray-600 disabled:opacity-50"
+                className="px-3 py-1 rounded-lg bg-gray-100 text-gray-400 disabled:opacity-50"
               >
                 Next
               </button>
@@ -693,10 +693,10 @@ const AdminProducts = () => {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-white rounded-2xl p-6 w-full max-w-md"
+              className="bg-gray-900 rounded-2xl p-6 w-full max-w-md"
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
+              <h3 className="text-xl font-bold text-white mb-4">
                 {editingProduct ? 'Edit Product' : 'Add New Product'}
               </h3>
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -706,7 +706,7 @@ const AdminProducts = () => {
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 focus:border-blue-500 focus:outline-none"
+                    className="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-300 focus:border-blue-500 focus:outline-none"
                     required
                   />
                 </div>
@@ -715,7 +715,7 @@ const AdminProducts = () => {
                   <textarea
                     value={formData.description}
                     onChange={(e) => setFormData({...formData, description: e.target.value})}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 focus:border-blue-500 focus:outline-none"
+                    className="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-300 focus:border-blue-500 focus:outline-none"
                     rows="3"
                     required
                   />
@@ -728,7 +728,7 @@ const AdminProducts = () => {
                       step="0.01"
                       value={formData.price}
                       onChange={(e) => setFormData({...formData, price: e.target.value})}
-                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 focus:border-blue-500 focus:outline-none"
+                      className="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-300 focus:border-blue-500 focus:outline-none"
                       required
                     />
                   </div>
@@ -738,7 +738,7 @@ const AdminProducts = () => {
                       type="number"
                       value={formData.stock_quantity}
                       onChange={(e) => setFormData({...formData, stock_quantity: e.target.value})}
-                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 focus:border-blue-500 focus:outline-none"
+                      className="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-300 focus:border-blue-500 focus:outline-none"
                       required
                     />
                   </div>
@@ -748,7 +748,7 @@ const AdminProducts = () => {
                   <select
                     value={formData.category_id}
                     onChange={(e) => setFormData({...formData, category_id: e.target.value})}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 focus:border-blue-500 focus:outline-none"
+                    className="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-300 focus:border-blue-500 focus:outline-none"
                     required
                   >
                     <option value="">Select Category</option>
@@ -764,7 +764,7 @@ const AdminProducts = () => {
                   <select
                     value={formData.status}
                     onChange={(e) => setFormData({...formData, status: e.target.value})}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 focus:border-blue-500 focus:outline-none"
+                    className="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-300 focus:border-blue-500 focus:outline-none"
                   >
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
@@ -856,11 +856,11 @@ const AdminOrders = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-900">Order Management</h2>
+        <h2 className="text-2xl font-bold text-white">Order Management</h2>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
+      <div className="bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-200">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="relative">
             <input
@@ -868,14 +868,14 @@ const AdminOrders = () => {
               placeholder="Search orders..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 border border-gray-300 focus:border-blue-500 focus:outline-none"
+              className="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-800 border border-gray-300 focus:border-blue-500 focus:outline-none"
             />
             <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
           </div>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 focus:border-blue-500 focus:outline-none"
+            className="px-4 py-3 rounded-xl bg-gray-800 border border-gray-300 focus:border-blue-500 focus:outline-none"
           >
             <option value="">All Statuses</option>
             <option value="pending">Pending</option>
@@ -888,7 +888,7 @@ const AdminOrders = () => {
       </div>
 
       {/* Orders Table */}
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+      <div className="bg-gray-900 rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center h-64">
             <div className="spinner"></div>
@@ -896,27 +896,27 @@ const AdminOrders = () => {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50">
+              <thead className="bg-gray-800">
                 <tr>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Order ID</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Customer</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Total</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Status</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Date</th>
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-900">Actions</th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-white">Order ID</th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-white">Customer</th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-white">Total</th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-white">Status</th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-white">Date</th>
+                  <th className="px-6 py-4 text-left text-sm font-medium text-white">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {orders.map((order) => (
-                  <tr key={order.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 font-medium text-gray-900">#{order.id}</td>
+                  <tr key={order.id} className="hover:bg-gray-800">
+                    <td className="px-6 py-4 font-medium text-white">#{order.id}</td>
                     <td className="px-6 py-4">
                       <div>
-                        <p className="font-medium text-gray-900">{order.user_name}</p>
-                        <p className="text-sm text-gray-600">{order.user_email}</p>
+                        <p className="font-medium text-white">{order.user_name}</p>
+                        <p className="text-sm text-gray-400">{order.user_email}</p>
                       </div>
                     </td>
-                    <td className="px-6 py-4 font-medium text-gray-900">${order.total_amount}</td>
+                    <td className="px-6 py-4 font-medium text-white">${order.total_amount}</td>
                     <td className="px-6 py-4">
                       <select
                         value={order.status}
@@ -936,7 +936,7 @@ const AdminOrders = () => {
                         <option value="cancelled">Cancelled</option>
                       </select>
                     </td>
-                    <td className="px-6 py-4 text-gray-600">
+                    <td className="px-6 py-4 text-gray-400">
                       {new Date(order.created_at).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4">
@@ -958,17 +958,17 @@ const AdminOrders = () => {
               <button
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="px-3 py-1 rounded-lg bg-gray-100 text-gray-600 disabled:opacity-50"
+                className="px-3 py-1 rounded-lg bg-gray-100 text-gray-400 disabled:opacity-50"
               >
                 Previous
               </button>
-              <span className="px-3 py-1 text-gray-600">
+              <span className="px-3 py-1 text-gray-400">
                 Page {currentPage} of {totalPages}
               </span>
               <button
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
-                className="px-3 py-1 rounded-lg bg-gray-100 text-gray-600 disabled:opacity-50"
+                className="px-3 py-1 rounded-lg bg-gray-100 text-gray-400 disabled:opacity-50"
               >
                 Next
               </button>
@@ -987,11 +987,11 @@ const Admin = () => {
 
   if (!checkIsAdmin()) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-800 flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-4">🔒</div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Access Denied</h2>
-          <p className="text-gray-600">You don't have permission to access the admin panel.</p>
+          <h2 className="text-2xl font-bold text-white mb-2">Access Denied</h2>
+          <p className="text-gray-400">You don't have permission to access the admin panel.</p>
         </div>
       </div>
     );
@@ -1005,12 +1005,12 @@ const Admin = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20 md:pb-0">
+    <div className="min-h-screen bg-gray-800 pb-20 md:pb-0">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+      <div className="bg-gray-900 border-b border-gray-200 p-4 flex items-center justify-between">
         <div>
-          <h1 className="text-lg sm:text-xl font-bold text-gray-900">Admin Panel</h1>
-          <p className="text-xs sm:text-sm text-gray-600">Welcome, {user?.name}</p>
+          <h1 className="text-lg sm:text-xl font-bold text-white">Admin Panel</h1>
+          <p className="text-xs sm:text-sm text-gray-400">Welcome, {user?.name}</p>
         </div>
         <button
           onClick={logout}
@@ -1021,7 +1021,7 @@ const Admin = () => {
       </div>
 
       {/* Desktop Navigation */}
-      <div className="hidden md:block bg-white border-b border-gray-200">
+      <div className="hidden md:block bg-gray-900 border-b border-gray-200">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex space-x-8">
             {navItems.map((item) => (

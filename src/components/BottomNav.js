@@ -57,7 +57,7 @@ const BottomNav = () => {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 md:hidden shadow-lg">
+    <div className="fixed bottom-0 left-0 right-0 bg-black border-t border-gray-800 z-50 md:hidden shadow-lg">
       <div className="flex justify-around items-center py-1 px-2">
         {navItems.map((item, index) => (
           <Link
@@ -72,8 +72,8 @@ const BottomNav = () => {
               {/* Icon Container */}
               <div className={`relative p-1.5 rounded-lg transition-all duration-300 ${
                 item.active 
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md' 
-                  : 'text-gray-500 hover:text-blue-600'
+                  ? 'bg-gradient-to-r from-indigo-600 to-purple-700 text-white shadow-md' 
+                  : 'text-gray-400 hover:text-purple-400'
               }`}>
                 <i className={`${item.icon} text-base`}></i>
                 
@@ -91,7 +91,7 @@ const BottomNav = () => {
               
               {/* Label - Always visible with better sizing */}
               <span className={`text-xs font-medium mt-0.5 transition-colors duration-300 text-center leading-tight ${
-                item.active ? 'text-blue-600' : 'text-gray-500'
+                item.active ? 'text-purple-400' : 'text-gray-400'
               }`}>
                 {item.label}
               </span>
@@ -101,7 +101,7 @@ const BottomNav = () => {
             {item.active && (
               <motion.div
                 layoutId="activeTab"
-                className="absolute top-0 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-blue-600 rounded-full"
+                className="absolute top-0 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-purple-500 rounded-full"
                 initial={false}
                 transition={{ type: "spring", stiffness: 500, damping: 30 }}
               />

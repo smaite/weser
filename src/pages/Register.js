@@ -53,24 +53,24 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-color to-secondary-color flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-black flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className="max-w-md w-full space-y-8"
       >
-        <div className="bg-white rounded-lg shadow-xl p-8">
+        <div className="bg-gray-900 rounded-lg shadow-xl p-8 border border-gray-800">
           <div className="text-center">
             <motion.h2
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
-              className="text-3xl font-bold text-gray-900 mb-2"
+              className="text-3xl font-bold text-white mb-2"
             >
               Create Account
             </motion.h2>
-            <p className="text-gray-600">Join Glorious Trade Hub today</p>
+            <p className="text-gray-400">Join Glorious Trade Hub today</p>
           </div>
 
           <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
@@ -221,11 +221,11 @@ const Register = () => {
             </motion.button>
 
             <div className="text-center">
-              <p className="text-gray-600">
+              <p className="text-gray-400">
                 Already have an account?{' '}
                 <Link 
                   to="/login" 
-                  className="text-primary-color hover:text-primary-dark font-semibold transition-colors"
+                  className="text-purple-400 hover:text-purple-300 font-semibold transition-colors"
                 >
                   Sign in here
                 </Link>

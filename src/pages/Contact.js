@@ -93,7 +93,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-black text-white">
       {/* Hero Section */}
       <motion.section 
         className="relative py-20 px-4 overflow-hidden"
@@ -165,14 +165,14 @@ const Contact = () => {
                 variants={itemVariants}
                 whileHover={{ y: -10, scale: 1.02 }}
               >
-                <div className="relative p-8 rounded-2xl bg-white shadow-lg hover:shadow-xl border border-gray-200 hover:border-purple-400/50 transition-all duration-300 h-full">
+                <div className="relative p-8 rounded-2xl bg-gray-900 shadow-lg hover:shadow-xl border border-gray-200 hover:border-purple-400/50 transition-all duration-300 h-full">
                   <div className="text-center">
                     <div className="text-4xl mb-4">{item.icon}</div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 group-hover:bg-clip-text transition-all duration-300">
+                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 group-hover:bg-clip-text transition-all duration-300">
                       {item.title}
                     </h3>
                     <p className="text-blue-600 font-semibold mb-2">{item.info}</p>
-                    <p className="text-gray-600 text-sm">{item.description}</p>
+                    <p className="text-gray-400 text-sm">{item.description}</p>
                   </div>
                 </div>
               </motion.div>
@@ -193,8 +193,8 @@ const Contact = () => {
           <div className="grid lg:grid-cols-2 gap-16">
             {/* Contact Form */}
             <motion.div variants={itemVariants}>
-              <div className="relative p-8 rounded-3xl bg-white shadow-lg border border-gray-200">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              <div className="relative p-8 rounded-3xl bg-gray-900 shadow-lg border border-gray-200">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
                   Send us a <span className="text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text">Message</span>
                 </h2>
                 
@@ -208,7 +208,7 @@ const Contact = () => {
                         value={formData.name}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
+                        className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
                         placeholder="Your Name"
                       />
                     </div>
@@ -220,7 +220,7 @@ const Contact = () => {
                         value={formData.email}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
+                        className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
                         placeholder="your.email@example.com"
                       />
                     </div>
@@ -234,7 +234,7 @@ const Contact = () => {
                       value={formData.subject}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
+                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
                       placeholder="What's this about?"
                     />
                   </div>
@@ -247,7 +247,7 @@ const Contact = () => {
                       onChange={handleInputChange}
                       required
                       rows={6}
-                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 resize-none"
+                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 resize-none"
                       placeholder="Tell us how we can help you..."
                     />
                   </div>
@@ -275,19 +275,19 @@ const Contact = () => {
             {/* Map & Additional Info */}
             <motion.div variants={itemVariants} className="space-y-8">
               {/* Map Placeholder */}
-              <div className="relative p-8 rounded-3xl bg-white shadow-lg border border-gray-200 h-64">
+              <div className="relative p-8 rounded-3xl bg-gray-900 shadow-lg border border-gray-200 h-64">
                 <div className="h-full flex items-center justify-center">
                   <div className="text-center">
                     <div className="text-6xl mb-4">🗺️</div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">Our Location</h3>
+                    <h3 className="text-2xl font-bold text-white mb-2">Our Location</h3>
                     <p className="text-gray-700">Interactive map coming soon</p>
                   </div>
                 </div>
               </div>
 
               {/* Quick Contact */}
-              <div className="relative p-8 rounded-3xl bg-white shadow-lg border border-gray-200">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">
+              <div className="relative p-8 rounded-3xl bg-gray-900 shadow-lg border border-gray-200">
+                <h3 className="text-2xl font-bold text-white mb-6">
                   Quick <span className="text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text">Contact</span>
                 </h3>
                 
@@ -297,8 +297,8 @@ const Contact = () => {
                       <span className="text-white text-xl">⏰</span>
                     </div>
                     <div>
-                      <p className="text-gray-900 font-semibold">Business Hours</p>
-                      <p className="text-gray-600">Mon - Fri: 9:00 AM - 6:00 PM</p>
+                      <p className="text-white font-semibold">Business Hours</p>
+                      <p className="text-gray-400">Mon - Fri: 9:00 AM - 6:00 PM</p>
                     </div>
                   </div>
                   
@@ -307,8 +307,8 @@ const Contact = () => {
                       <span className="text-white text-xl">🚀</span>
                     </div>
                     <div>
-                      <p className="text-gray-900 font-semibold">Response Time</p>
-                      <p className="text-gray-600">Usually within 2 hours</p>
+                      <p className="text-white font-semibold">Response Time</p>
+                      <p className="text-gray-400">Usually within 2 hours</p>
                     </div>
                   </div>
                   
@@ -317,8 +317,8 @@ const Contact = () => {
                       <span className="text-white text-xl">🌍</span>
                     </div>
                     <div>
-                      <p className="text-gray-900 font-semibold">Global Support</p>
-                      <p className="text-gray-600">50+ countries served</p>
+                      <p className="text-white font-semibold">Global Support</p>
+                      <p className="text-gray-400">50+ countries served</p>
                     </div>
                   </div>
                 </div>
@@ -338,7 +338,7 @@ const Contact = () => {
       >
         <div className="max-w-4xl mx-auto">
           <motion.div className="text-center mb-16" variants={itemVariants}>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Frequently Asked <span className="text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text">Questions</span>
             </h2>
           </motion.div>
@@ -364,10 +364,10 @@ const Contact = () => {
             ].map((faq, index) => (
               <motion.div
                 key={index}
-                className="relative p-6 rounded-2xl bg-white shadow-lg border border-gray-200"
+                className="relative p-6 rounded-2xl bg-gray-900 shadow-lg border border-gray-200"
                 variants={itemVariants}
               >
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{faq.question}</h3>
+                <h3 className="text-xl font-bold text-white mb-3">{faq.question}</h3>
                 <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
               </motion.div>
             ))}

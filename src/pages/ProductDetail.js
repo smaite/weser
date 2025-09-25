@@ -111,8 +111,8 @@ const ProductDetail = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Product Not Found</h2>
-          <p className="text-gray-600 mb-4">The product you're looking for doesn't exist.</p>
+          <h2 className="text-2xl font-bold text-white mb-2">Product Not Found</h2>
+          <p className="text-gray-400 mb-4">The product you're looking for doesn't exist.</p>
           <button
             onClick={() => navigate('/products')}
             className="btn-primary"
@@ -125,14 +125,14 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-black text-white">
       <div className="container mx-auto px-4 py-8">
         {/* Back Button */}
         <motion.button
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           onClick={() => navigate(-1)}
-          className="flex items-center text-gray-600 hover:text-blue-600 mb-6 transition-colors"
+          className="flex items-center text-gray-400 hover:text-blue-600 mb-6 transition-colors"
         >
           <i className="fas fa-arrow-left mr-2"></i>
           Back
@@ -145,7 +145,7 @@ const ProductDetail = () => {
             animate={{ opacity: 1, x: 0 }}
             className="space-y-4"
           >
-            <div className="aspect-square rounded-2xl overflow-hidden bg-white shadow-lg">
+            <div className="aspect-square rounded-2xl overflow-hidden bg-gray-900 shadow-lg">
               <div
                 className="w-full h-full flex items-center justify-center text-white text-6xl font-bold"
                 style={{ background: getGradientPlaceholder(product.id) }}
@@ -169,7 +169,7 @@ const ProductDetail = () => {
             )}
 
             {/* Product Title */}
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+            <h1 className="text-3xl md:text-4xl font-bold text-white">
               {product.name}
             </h1>
 
@@ -202,7 +202,7 @@ const ProductDetail = () => {
 
             {/* Description */}
             <div className="prose prose-gray max-w-none">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
+              <h3 className="text-lg font-semibold text-white mb-2">Description</h3>
               <p className="text-gray-700 leading-relaxed">
                 {product.description}
               </p>
@@ -274,7 +274,7 @@ const ProductDetail = () => {
 
             {/* Product Features */}
             <div className="border-t pt-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Features</h3>
+              <h3 className="text-lg font-semibold text-white mb-4">Features</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex items-center space-x-2">
                   <i className="fas fa-shipping-fast text-blue-600"></i>
@@ -305,13 +305,13 @@ const ProductDetail = () => {
             transition={{ delay: 0.3 }}
             className="mt-16"
           >
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">Related Products</h2>
+            <h2 className="text-2xl font-bold text-white mb-8">Related Products</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedProducts.map((relatedProduct) => (
                 <motion.div
                   key={relatedProduct.id}
                   whileHover={{ scale: 1.02 }}
-                  className="bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer"
+                  className="bg-gray-900 rounded-2xl shadow-lg overflow-hidden cursor-pointer"
                   onClick={() => navigate(`/products/${relatedProduct.id}`)}
                 >
                   <div
@@ -321,7 +321,7 @@ const ProductDetail = () => {
                     {relatedProduct.name.charAt(0).toUpperCase()}
                   </div>
                   <div className="p-4">
-                    <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
+                    <h3 className="font-semibold text-white mb-2 line-clamp-2">
                       {relatedProduct.name}
                     </h3>
                     <p className="text-2xl font-bold text-blue-600">

@@ -146,7 +146,7 @@ const Products = () => {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
       {[...Array(8)].map((_, i) => (
         <div key={i} className="animate-pulse">
-          <div className="bg-white/10 rounded-2xl p-6 backdrop-blur-sm border border-white/20">
+          <div className="bg-gray-900/50 rounded-2xl p-6 backdrop-blur-sm border border-gray-700">
             <div className="aspect-square bg-gray-300/20 rounded-xl mb-4"></div>
             <div className="h-4 bg-gray-300/20 rounded mb-2"></div>
             <div className="h-3 bg-gray-300/20 rounded mb-4 w-2/3"></div>
@@ -158,7 +158,7 @@ const Products = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-black text-white">
       {/* Hero Section */}
       <motion.section 
         className="relative py-20 px-4 overflow-hidden"
@@ -229,7 +229,7 @@ const Products = () => {
                   placeholder="Search products..."
                   value={filters.search}
                   onChange={(e) => handleFilterChange('search', e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
+                  className="w-full pl-12 pr-4 py-3 rounded-xl bg-gray-900 border border-gray-700 text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
                 />
                 <i className="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
               </div>
@@ -247,13 +247,13 @@ const Products = () => {
               </button>
 
               {/* View Mode Toggle */}
-              <div className="flex items-center bg-white rounded-xl p-1 border border-gray-300">
+              <div className="flex items-center bg-gray-900 rounded-xl p-1 border border-gray-700">
                 <button
                   onClick={() => setViewMode('grid')}
                   className={`p-2 rounded-lg transition-all duration-300 ${
                     viewMode === 'grid' 
-                      ? 'bg-blue-500 text-white' 
-                      : 'text-gray-600 hover:text-gray-900'
+                      ? 'bg-purple-600 text-white' 
+                      : 'text-gray-400 hover:text-white'
                   }`}
                 >
                   <i className="fas fa-th"></i>
@@ -262,8 +262,8 @@ const Products = () => {
                   onClick={() => setViewMode('list')}
                   className={`p-2 rounded-lg transition-all duration-300 ${
                     viewMode === 'list' 
-                      ? 'bg-blue-500 text-white' 
-                      : 'text-gray-600 hover:text-gray-900'
+                      ? 'bg-purple-600 text-white' 
+                      : 'text-gray-400 hover:text-white'
                   }`}
                 >
                   <i className="fas fa-list"></i>
@@ -279,16 +279,16 @@ const Products = () => {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="mt-6 p-6 rounded-2xl bg-white shadow-lg border border-gray-200"
+                className="mt-6 p-6 rounded-2xl bg-gray-900 shadow-lg border border-gray-700"
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {/* Category Filter */}
                   <div>
-                    <label className="block text-gray-900 font-medium mb-2">Category</label>
+                    <label className="block text-white font-medium mb-2">Category</label>
                     <select
                       value={filters.category}
                       onChange={(e) => handleFilterChange('category', e.target.value)}
-                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
+                      className="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-600 text-white focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
                     >
                       <option value="">All Categories</option>
                       {Array.isArray(categories) && categories.map(category => (
@@ -326,12 +326,12 @@ const Products = () => {
 
                   {/* Sort Options */}
                   <div>
-                    <label className="block text-gray-900 font-medium mb-2">Sort By</label>
+                    <label className="block text-white font-medium mb-2">Sort By</label>
                     <div className="space-y-2">
                       <select
                         value={filters.sortBy}
                         onChange={(e) => handleFilterChange('sortBy', e.target.value)}
-                        className="w-full px-4 py-2 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 focus:border-blue-500 focus:outline-none transition-all duration-300"
+                        className="w-full px-4 py-2 rounded-xl bg-gray-800 border border-gray-600 text-white focus:border-purple-500 focus:outline-none transition-all duration-300"
                       >
                         <option value="name" className="bg-gray-800">Name</option>
                         <option value="price" className="bg-gray-800">Price</option>
@@ -340,7 +340,7 @@ const Products = () => {
                       <select
                         value={filters.sortOrder}
                         onChange={(e) => handleFilterChange('sortOrder', e.target.value)}
-                        className="w-full px-4 py-2 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 focus:border-blue-500 focus:outline-none transition-all duration-300"
+                        className="w-full px-4 py-2 rounded-xl bg-gray-800 border border-gray-600 text-white focus:border-purple-500 focus:outline-none transition-all duration-300"
                       >
                         <option value="asc" className="bg-gray-800">Ascending</option>
                         <option value="desc" className="bg-gray-800">Descending</option>
@@ -350,7 +350,7 @@ const Products = () => {
 
                   {/* Additional Filters */}
                   <div>
-                    <label className="block text-gray-900 font-medium mb-2">Options</label>
+                    <label className="block text-white font-medium mb-2">Options</label>
                     <div className="space-y-3">
                       <label className="flex items-center space-x-3 cursor-pointer">
                         <input
@@ -398,7 +398,7 @@ const Products = () => {
                       className={`group cursor-pointer ${viewMode === 'list' ? 'flex items-center space-x-6' : ''}`}
                       onClick={() => navigate(`/products/${product.id}`)}
                     >
-                      <div className={`relative rounded-2xl bg-white shadow-lg hover:shadow-2xl border border-gray-200 hover:border-blue-400/50 transition-all duration-500 overflow-hidden backdrop-blur-sm ${
+                      <div className={`relative rounded-2xl bg-gray-900 shadow-lg hover:shadow-2xl border border-gray-700 hover:border-purple-500/50 transition-all duration-500 overflow-hidden backdrop-blur-sm ${
                         viewMode === 'list' ? 'p-6 flex-1' : 'p-6'
                       }`}>
         {/* Product Image */}
@@ -484,24 +484,24 @@ const Products = () => {
                         {/* Product Info */}
                         <div className={viewMode === 'list' ? 'flex-1' : ''}>
                           <div className="flex items-start justify-between mb-2">
-                            <h3 className="text-xl font-bold text-gray-900 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 group-hover:bg-clip-text transition-all duration-300 line-clamp-2 flex-1">
+                            <h3 className="text-xl font-bold text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-indigo-400 group-hover:bg-clip-text transition-all duration-300 line-clamp-2 flex-1">
                               {product.name}
                             </h3>
                             {product.category_name && (
-                              <span className="ml-2 px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full whitespace-nowrap">
+                              <span className="ml-2 px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded-full whitespace-nowrap">
                                 {product.category_name}
                               </span>
                             )}
                           </div>
                           
-                          <p className="text-gray-600 mb-4 line-clamp-2 text-sm leading-relaxed">
+                          <p className="text-gray-400 mb-4 line-clamp-2 text-sm leading-relaxed">
                             {product.description}
                           </p>
 
                           {/* Price and Stock Row */}
                           <div className="flex items-center justify-between mb-4">
                             <div className="flex flex-col">
-                              <span className="text-2xl font-bold text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text">
+                              <span className="text-2xl font-bold text-transparent bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text">
                                 ${product.price}
                               </span>
                               {/* Stock indicator */}
@@ -511,8 +511,8 @@ const Products = () => {
                                   product.stock_quantity > 0 ? 'bg-yellow-400' : 'bg-red-400'
                                 }`}></div>
                                 <span className={`text-xs font-medium ${
-                                  product.stock_quantity > 10 ? 'text-green-600' :
-                                  product.stock_quantity > 0 ? 'text-yellow-600' : 'text-red-600'
+                                  product.stock_quantity > 10 ? 'text-green-400' :
+                                  product.stock_quantity > 0 ? 'text-yellow-400' : 'text-red-400'
                                 }`}>
                                   {product.stock_quantity > 10 ? 'In Stock' :
                                    product.stock_quantity > 0 ? `${product.stock_quantity} left` : 'Out of Stock'}
@@ -527,8 +527,8 @@ const Products = () => {
                             disabled={product.stock_quantity === 0}
                             className={`w-full py-3 rounded-xl font-medium transition-all duration-300 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 ${
                               product.stock_quantity > 0
-                                ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700'
-                                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-700 hover:to-indigo-700'
+                                : 'bg-gray-700 text-gray-400 cursor-not-allowed'
                             }`}
                           >
                             <i className={`fas ${product.stock_quantity > 0 ? 'fa-cart-plus' : 'fa-ban'}`}></i>
@@ -545,11 +545,11 @@ const Products = () => {
                   variants={itemVariants}
                 >
                   <div className="text-6xl mb-6">🔍</div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">No products found</h3>
-                  <p className="text-gray-600 mb-8">Try adjusting your search criteria or filters.</p>
+                  <h3 className="text-2xl font-bold text-white mb-4">No products found</h3>
+                  <p className="text-gray-400 mb-8">Try adjusting your search criteria or filters.</p>
                   <button
                     onClick={clearFilters}
-                    className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-300"
+                    className="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-medium hover:from-purple-700 hover:to-indigo-700 transition-all duration-300"
                   >
                     Clear All Filters
                   </button>
@@ -572,7 +572,7 @@ const Products = () => {
               <button
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="px-4 py-2 rounded-xl bg-white border border-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-all duration-300"
+                className="px-4 py-2 rounded-xl bg-gray-900 border border-gray-700 text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-800 transition-all duration-300"
               >
                 <i className="fas fa-chevron-left"></i>
               </button>
@@ -585,8 +585,8 @@ const Products = () => {
                     onClick={() => setCurrentPage(pageNum)}
                     className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
                       currentPage === pageNum
-                        ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
-                        : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                        ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white'
+                        : 'bg-gray-900 border border-gray-700 text-gray-300 hover:bg-gray-800'
                     }`}
                   >
                     {pageNum}
@@ -597,7 +597,7 @@ const Products = () => {
               <button
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
-                className="px-4 py-2 rounded-xl bg-white border border-gray-300 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-all duration-300"
+                className="px-4 py-2 rounded-xl bg-gray-900 border border-gray-700 text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-800 transition-all duration-300"
               >
                 <i className="fas fa-chevron-right"></i>
               </button>

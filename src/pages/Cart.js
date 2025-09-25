@@ -27,16 +27,16 @@ const Cart = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-black py-8">
         <div className="container">
-          <div className="bg-white rounded-lg shadow-sm p-6">
+          <div className="bg-gray-900 rounded-lg shadow-sm p-6 border border-gray-800">
             <div className="animate-pulse space-y-4">
               {[...Array(3)].map((_, i) => (
                 <div key={i} className="flex space-x-4">
-                  <div className="w-20 h-20 bg-gray-200 rounded"></div>
+                  <div className="w-20 h-20 bg-gray-700 rounded"></div>
                   <div className="flex-1 space-y-2">
-                    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-                    <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                    <div className="h-4 bg-gray-700 rounded w-3/4"></div>
+                    <div className="h-3 bg-gray-700 rounded w-1/2"></div>
                   </div>
                 </div>
               ))}
@@ -49,15 +49,15 @@ const Cart = () => {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-black flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
         >
-          <i className="fas fa-shopping-cart text-6xl text-gray-300 mb-4"></i>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Your cart is empty</h2>
-          <p className="text-gray-600 mb-6">Start shopping to add items to your cart</p>
+          <i className="fas fa-shopping-cart text-6xl text-gray-400 mb-4"></i>
+          <h2 className="text-2xl font-bold text-white mb-2">Your cart is empty</h2>
+          <p className="text-gray-400 mb-6">Start shopping to add items to your cart</p>
           <Link to="/products" className="btn btn-primary">
             <i className="fas fa-shopping-bag mr-2"></i>
             Continue Shopping
@@ -68,14 +68,14 @@ const Cart = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-4 sm:py-8">
+    <div className="min-h-screen bg-black py-4 sm:py-8">
       <div className="container px-4">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-8">Shopping Cart</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-8">Shopping Cart</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg shadow-sm">
+            <div className="bg-gray-900 rounded-lg shadow-sm border border-gray-800">
               {cartItems.map((item) => (
                 <motion.div
                   key={item.id}
@@ -99,15 +99,15 @@ const Cart = () => {
                       )}
                       
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-gray-900 text-sm truncate">{item.name}</h3>
-                        <p className="text-gray-600 text-xs">${parseFloat(item.price).toFixed(2)}</p>
-                        <p className="text-gray-500 text-xs">Stock: {item.stock_quantity}</p>
+                        <h3 className="font-semibold text-white text-sm truncate">{item.name}</h3>
+                        <p className="text-gray-400 text-xs">${parseFloat(item.price).toFixed(2)}</p>
+                        <p className="text-gray-400 text-xs">Stock: {item.stock_quantity}</p>
                         
                         <div className="flex items-center justify-between mt-2">
                           <div className="flex items-center space-x-2">
                             <button
                               onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                              className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+                              className="w-7 h-7 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
                             >
                               <i className="fas fa-minus text-xs"></i>
                             </button>
@@ -115,14 +115,14 @@ const Cart = () => {
                             <button
                               onClick={() => handleQuantityChange(item.id, Math.min(item.stock_quantity, item.quantity + 1))}
                               disabled={item.quantity >= item.stock_quantity}
-                              className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors disabled:opacity-50"
+                              className="w-7 h-7 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors disabled:opacity-50"
                             >
                               <i className="fas fa-plus text-xs"></i>
                             </button>
                           </div>
                           
                           <div className="text-right">
-                            <p className="font-bold text-sm text-blue-600">
+                            <p className="font-bold text-sm text-purple-400">
                               ${(parseFloat(item.price) * item.quantity).toFixed(2)}
                             </p>
                             <button
@@ -153,15 +153,15 @@ const Cart = () => {
                     )}
                     
                     <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900">{item.name}</h3>
-                      <p className="text-gray-600 text-sm">Price: ${parseFloat(item.price).toFixed(2)}</p>
-                      <p className="text-gray-500 text-xs">Stock: {item.stock_quantity} available</p>
+                      <h3 className="font-semibold text-white">{item.name}</h3>
+                      <p className="text-gray-400 text-sm">Price: ${parseFloat(item.price).toFixed(2)}</p>
+                      <p className="text-gray-400 text-xs">Stock: {item.stock_quantity} available</p>
                     </div>
 
                     <div className="flex items-center space-x-3">
                       <button
                         onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                        className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+                        className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
                       >
                         <i className="fas fa-minus text-xs"></i>
                       </button>
@@ -169,14 +169,14 @@ const Cart = () => {
                       <button
                         onClick={() => handleQuantityChange(item.id, Math.min(item.stock_quantity, item.quantity + 1))}
                         disabled={item.quantity >= item.stock_quantity}
-                        className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors disabled:opacity-50"
+                        className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors disabled:opacity-50"
                       >
                         <i className="fas fa-plus text-xs"></i>
                       </button>
                     </div>
 
                     <div className="text-right">
-                      <p className="font-bold text-lg text-blue-600">
+                      <p className="font-bold text-lg text-purple-400">
                         ${(parseFloat(item.price) * item.quantity).toFixed(2)}
                       </p>
                       <button
@@ -196,15 +196,15 @@ const Cart = () => {
           {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 sticky top-8">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Order Summary</h3>
+              <h3 className="text-lg font-semibold text-white mb-4">Order Summary</h3>
               
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Subtotal</span>
+                  <span className="text-gray-400">Subtotal</span>
                   <span className="font-semibold">${getCartTotal().toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Shipping</span>
+                  <span className="text-gray-400">Shipping</span>
                   <span className="font-semibold">Free</span>
                 </div>
                 <div className="border-t pt-3">

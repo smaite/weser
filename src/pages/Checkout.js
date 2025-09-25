@@ -43,8 +43,8 @@ const Checkout = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Your cart is empty</h2>
-          <p className="text-gray-600 mb-4">Add some items to your cart before checkout</p>
+          <h2 className="text-2xl font-bold text-white mb-2">Your cart is empty</h2>
+          <p className="text-gray-400 mb-4">Add some items to your cart before checkout</p>
           <button
             onClick={() => navigate('/products')}
             className="btn btn-primary"
@@ -57,18 +57,18 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-4 sm:py-8">
+    <div className="min-h-screen bg-black py-4 sm:py-8">
       <div className="container px-4">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-8">Checkout</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-8">Checkout</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
           {/* Checkout Form */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-white rounded-lg shadow-sm p-4 sm:p-6"
+            className="bg-gray-900 rounded-lg shadow-sm p-4 sm:p-6"
           >
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Shipping Information</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Shipping Information</h2>
             
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -187,9 +187,9 @@ const Checkout = () => {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-white rounded-lg shadow-sm p-4 sm:p-6"
+            className="bg-gray-900 rounded-lg shadow-sm p-4 sm:p-6"
           >
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Order Summary</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Order Summary</h2>
             
             <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
               {cartItems.map((item) => (
@@ -206,8 +206,8 @@ const Checkout = () => {
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-medium text-gray-900 text-sm sm:text-base truncate">{item.name}</h4>
-                    <p className="text-xs sm:text-sm text-gray-600">Qty: {item.quantity}</p>
+                    <h4 className="font-medium text-white text-sm sm:text-base truncate">{item.name}</h4>
+                    <p className="text-xs sm:text-sm text-gray-400">Qty: {item.quantity}</p>
                   </div>
                   <p className="font-semibold text-sm sm:text-base">
                     ${(parseFloat(item.price) * item.quantity).toFixed(2)}
@@ -218,11 +218,11 @@ const Checkout = () => {
 
             <div className="border-t pt-4 space-y-2">
               <div className="flex justify-between">
-                <span className="text-gray-600">Subtotal</span>
+                <span className="text-gray-400">Subtotal</span>
                 <span className="font-semibold">${getCartTotal().toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Shipping</span>
+                <span className="text-gray-400">Shipping</span>
                 <span className="font-semibold">Free</span>
               </div>
               <div className="flex justify-between text-lg font-bold text-primary-color pt-2 border-t">
