@@ -101,7 +101,7 @@ const ProductDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="spinner"></div>
       </div>
     );
@@ -109,7 +109,7 @@ const ProductDetail = () => {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-white mb-2">Product Not Found</h2>
           <p className="text-gray-400 mb-4">The product you're looking for doesn't exist.</p>
@@ -132,7 +132,7 @@ const ProductDetail = () => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           onClick={() => navigate(-1)}
-          className="flex items-center text-gray-400 hover:text-blue-600 mb-6 transition-colors"
+          className="flex items-center text-gray-400 hover:text-purple-400 mb-6 transition-colors"
         >
           <i className="fas fa-arrow-left mr-2"></i>
           Back
@@ -146,12 +146,55 @@ const ProductDetail = () => {
             className="space-y-4"
           >
             <div className="aspect-square rounded-2xl overflow-hidden bg-gray-900 shadow-lg">
-              <div
-                className="w-full h-full flex items-center justify-center text-white text-6xl font-bold"
-                style={{ background: getGradientPlaceholder(product.id) }}
-              >
-                {product.name.charAt(0).toUpperCase()}
-              </div>
+              {(() => {
+                // Parse product images
+                let images = [];
+                try {
+                  images = product.images ? JSON.parse(product.images) : [];
+                } catch (error) {
+                  console.error('Error parsing product images:', error);
+                  images = [];
+                }
+
+                const hasImages = Array.isArray(images) && images.length > 0;
+
+                if (hasImages) {
+                  return (
+                    <>
+                      <img
+                        src={images[0]}
+                        alt={product.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          // Fallback to gradient if image fails to load
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'flex';
+                        }}
+                      />
+                      {/* Fallback gradient (hidden by default) */}
+                      <div
+                        className="w-full h-full flex items-center justify-center text-white text-6xl font-bold"
+                        style={{ 
+                          background: getGradientPlaceholder(product.id),
+                          display: 'none'
+                        }}
+                      >
+                        {product.name.charAt(0).toUpperCase()}
+                      </div>
+                    </>
+                  );
+                }
+
+                // Show gradient placeholder if no images
+                return (
+                  <div
+                    className="w-full h-full flex items-center justify-center text-white text-6xl font-bold"
+                    style={{ background: getGradientPlaceholder(product.id) }}
+                  >
+                    {product.name.charAt(0).toUpperCase()}
+                  </div>
+                );
+              })()}
             </div>
           </motion.div>
 
@@ -163,7 +206,7 @@ const ProductDetail = () => {
           >
             {/* Category Badge */}
             {product.category_name && (
-              <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
+              <span className="inline-block px-3 py-1 bg-purple-900/50 text-purple-300 text-sm font-medium rounded-full border border-purple-500/30">
                 {product.category_name}
               </span>
             )}
@@ -175,7 +218,7 @@ const ProductDetail = () => {
 
             {/* Price */}
             <div className="flex items-center space-x-4">
-              <span className="text-4xl font-bold text-blue-600">
+              <span className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
                 ${product.price}
               </span>
               {product.featured && (
@@ -203,7 +246,7 @@ const ProductDetail = () => {
             {/* Description */}
             <div className="prose prose-gray max-w-none">
               <h3 className="text-lg font-semibold text-white mb-2">Description</h3>
-              <p className="text-gray-700 leading-relaxed">
+              <p className="text-gray-400 leading-relaxed">
                 {product.description}
               </p>
             </div>
@@ -212,19 +255,19 @@ const ProductDetail = () => {
             {product.stock_quantity > 0 && (
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
-                  <label className="font-medium text-gray-700">Quantity:</label>
-                  <div className="flex items-center border border-gray-300 rounded-lg">
+                  <label className="font-medium text-gray-300">Quantity:</label>
+                  <div className="flex items-center border border-gray-600 rounded-lg bg-gray-800">
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="px-3 py-2 hover:bg-gray-100 transition-colors"
+                      className="px-3 py-2 hover:bg-gray-700 transition-colors text-gray-300 hover:text-purple-400"
                       disabled={quantity <= 1}
                     >
                       <i className="fas fa-minus"></i>
                     </button>
-                    <span className="px-4 py-2 font-medium">{quantity}</span>
+                    <span className="px-4 py-2 font-medium text-white">{quantity}</span>
                     <button
                       onClick={() => setQuantity(Math.min(product.stock_quantity, quantity + 1))}
-                      className="px-3 py-2 hover:bg-gray-100 transition-colors"
+                      className="px-3 py-2 hover:bg-gray-700 transition-colors text-gray-300 hover:text-purple-400"
                       disabled={quantity >= product.stock_quantity}
                     >
                       <i className="fas fa-plus"></i>
@@ -264,8 +307,8 @@ const ProductDetail = () => {
 
             {/* Out of Stock Message */}
             {product.stock_quantity === 0 && (
-              <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-                <p className="text-red-800 font-medium">
+              <div className="p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
+                <p className="text-red-400 font-medium">
                   <i className="fas fa-exclamation-circle mr-2"></i>
                   This product is currently out of stock.
                 </p>
@@ -273,24 +316,24 @@ const ProductDetail = () => {
             )}
 
             {/* Product Features */}
-            <div className="border-t pt-6">
+            <div className="border-t border-gray-700 pt-6">
               <h3 className="text-lg font-semibold text-white mb-4">Features</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex items-center space-x-2">
-                  <i className="fas fa-shipping-fast text-blue-600"></i>
-                  <span className="text-gray-700">Fast Shipping</span>
+                  <i className="fas fa-shipping-fast text-purple-400"></i>
+                  <span className="text-gray-400">Fast Shipping</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <i className="fas fa-undo text-blue-600"></i>
-                  <span className="text-gray-700">30-Day Returns</span>
+                  <i className="fas fa-undo text-purple-400"></i>
+                  <span className="text-gray-400">30-Day Returns</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <i className="fas fa-shield-alt text-blue-600"></i>
-                  <span className="text-gray-700">1 Year Warranty</span>
+                  <i className="fas fa-shield-alt text-purple-400"></i>
+                  <span className="text-gray-400">1 Year Warranty</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <i className="fas fa-headset text-blue-600"></i>
-                  <span className="text-gray-700">24/7 Support</span>
+                  <i className="fas fa-headset text-purple-400"></i>
+                  <span className="text-gray-400">24/7 Support</span>
                 </div>
               </div>
             </div>
@@ -314,17 +357,58 @@ const ProductDetail = () => {
                   className="bg-gray-900 rounded-2xl shadow-lg overflow-hidden cursor-pointer"
                   onClick={() => navigate(`/products/${relatedProduct.id}`)}
                 >
-                  <div
-                    className="h-48 flex items-center justify-center text-white text-2xl font-bold"
-                    style={{ background: getGradientPlaceholder(relatedProduct.id) }}
-                  >
-                    {relatedProduct.name.charAt(0).toUpperCase()}
+                  <div className="h-48 relative overflow-hidden">
+                    {(() => {
+                      // Parse related product images
+                      let images = [];
+                      try {
+                        images = relatedProduct.images ? JSON.parse(relatedProduct.images) : [];
+                      } catch (error) {
+                        images = [];
+                      }
+
+                      const hasImages = Array.isArray(images) && images.length > 0;
+
+                      if (hasImages) {
+                        return (
+                          <>
+                            <img
+                              src={images[0]}
+                              alt={relatedProduct.name}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                                e.target.nextSibling.style.display = 'flex';
+                              }}
+                            />
+                            <div
+                              className="w-full h-full flex items-center justify-center text-white text-2xl font-bold absolute inset-0"
+                              style={{ 
+                                background: getGradientPlaceholder(relatedProduct.id),
+                                display: 'none'
+                              }}
+                            >
+                              {relatedProduct.name.charAt(0).toUpperCase()}
+                            </div>
+                          </>
+                        );
+                      }
+
+                      return (
+                        <div
+                          className="w-full h-full flex items-center justify-center text-white text-2xl font-bold"
+                          style={{ background: getGradientPlaceholder(relatedProduct.id) }}
+                        >
+                          {relatedProduct.name.charAt(0).toUpperCase()}
+                        </div>
+                      );
+                    })()}
                   </div>
                   <div className="p-4">
                     <h3 className="font-semibold text-white mb-2 line-clamp-2">
                       {relatedProduct.name}
                     </h3>
-                    <p className="text-2xl font-bold text-blue-600">
+                    <p className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
                       ${relatedProduct.price}
                     </p>
                   </div>
