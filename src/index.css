@@ -231,11 +231,12 @@
 /* Main content padding for bottom nav on mobile */
 @media (max-width: 767px) {
   .main-content {
-    padding-bottom: 80px;
+    padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
   }
   
+  /* Remove conflicting body padding that was causing issues */
   body {
-    padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: 0;
   }
   
   /* Ensure content doesn't overlap with bottom navigation */
@@ -250,12 +251,14 @@
   
   /* Bottom navigation specific fixes */
   .bottom-nav-safe {
-    height: calc(70px + env(safe-area-inset-bottom, 0px));
+    height: calc(75px + env(safe-area-inset-bottom, 0px));
   }
   
   /* Prevent content from being hidden behind bottom nav */
   .min-h-screen {
-    min-height: calc(100vh - 70px);
+    min-height: calc(100vh - 90px);
+    min-height: calc(var(--vh, 1vh) * 100 - 90px);
+    padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
   }
   
   /* Mobile-specific improvements */
@@ -286,7 +289,43 @@
   
   /* Ensure admin content doesn't get hidden behind bottom nav */
   .admin-content {
-    padding-bottom: 90px;
+    padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Mobile viewport fixes for better bottom nav visibility */
+@supports (-webkit-touch-callout: none) {
+  /* iOS specific fixes for viewport issues */
+  html {
+    height: -webkit-fill-available;
+  }
+  
+  body {
+    min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
+    min-height: -webkit-fill-available;
+  }
+  
+  #root {
+    min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Force bottom navigation to always be visible and prevent browser UI interference */
+@media (max-width: 767px) and (orientation: portrait) {
+  /* Additional fixes for portrait mode on mobile */
+  body {
+    position: relative;
+    overflow-x: hidden;
+  }
+  
+  /* Ensure bottom nav stays fixed */
+  .fixed.bottom-0 {
+    position: fixed !important;
+    bottom: 0 !important;
+    z-index: 9999 !important;
   }
 }
 

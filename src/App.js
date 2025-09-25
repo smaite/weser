@@ -11,6 +11,7 @@ import { CartProvider } from './context/CartContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import MobileViewportFix from './components/MobileViewportFix';
 
 // Pages
 import Home from './pages/Home';
@@ -36,6 +37,7 @@ function App() {
       <CartProvider>
         <Router>
           <ScrollToTop />
+          <MobileViewportFix />
           <div className="min-h-screen flex flex-col">
             <Toaster 
               position="top-right"

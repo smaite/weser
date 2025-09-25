@@ -315,7 +315,7 @@ const Profile = () => {
               className="bg-gray-900 rounded-2xl p-6 border border-gray-800"
             >
               <h2 className="text-xl font-semibold text-white mb-6">Account Stats</h2>
-              <div className="space-y-4">
+          <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-purple-600/20 rounded-lg flex items-center justify-center">
@@ -333,7 +333,7 @@ const Profile = () => {
                     <div className="w-10 h-10 bg-green-600/20 rounded-lg flex items-center justify-center">
                       <i className="fas fa-dollar-sign text-green-400"></i>
                     </div>
-                    <div>
+            <div>
                       <p className="text-gray-400 text-sm">Total Spent</p>
                       <p className="font-semibold text-white">${stats.totalSpent}</p>
                     </div>
@@ -344,8 +344,8 @@ const Profile = () => {
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center">
                       <i className="fas fa-shopping-cart text-blue-400"></i>
-                    </div>
-                    <div>
+            </div>
+            <div>
                       <p className="text-gray-400 text-sm">Cart Items</p>
                       <p className="font-semibold text-white">{stats.cartItems}</p>
                     </div>
@@ -356,11 +356,11 @@ const Profile = () => {
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-red-600/20 rounded-lg flex items-center justify-center">
                       <i className="fas fa-heart text-red-400"></i>
-                    </div>
-                    <div>
+            </div>
+            <div>
                       <p className="text-gray-400 text-sm">Wishlist</p>
                       <p className="font-semibold text-white">{stats.wishlistItems}</p>
-                    </div>
+            </div>
                   </div>
                 </div>
               </div>

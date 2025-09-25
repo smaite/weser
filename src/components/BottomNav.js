@@ -57,8 +57,9 @@ const BottomNav = () => {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-black border-t border-gray-800 z-50 md:hidden shadow-lg">
-      <div className="flex justify-around items-center py-1 px-2">
+    <div className="fixed bottom-0 left-0 right-0 bg-black border-t border-gray-800 z-50 md:hidden shadow-lg" 
+         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+      <div className="flex justify-around items-center py-2 px-2">
         {navItems.map((item, index) => (
           <Link
             key={item.path}
@@ -67,22 +68,22 @@ const BottomNav = () => {
           >
             <motion.div
               whileTap={{ scale: 0.9 }}
-              className="relative flex flex-col items-center min-h-[50px] justify-center"
+              className="relative flex flex-col items-center min-h-[52px] justify-center"
             >
               {/* Icon Container */}
-              <div className={`relative p-1.5 rounded-lg transition-all duration-300 ${
+              <div className={`relative p-2 rounded-lg transition-all duration-300 ${
                 item.active 
                   ? 'bg-gradient-to-r from-indigo-600 to-purple-700 text-white shadow-md' 
                   : 'text-gray-400 hover:text-purple-400'
               }`}>
-                <i className={`${item.icon} text-base`}></i>
+                <i className={`${item.icon} text-lg`}></i>
                 
                 {/* Badge for cart */}
                 {item.badge && (
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center"
+                    className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"
                   >
                     {item.badge > 99 ? '99+' : item.badge}
                   </motion.div>
@@ -90,7 +91,7 @@ const BottomNav = () => {
               </div>
               
               {/* Label - Always visible with better sizing */}
-              <span className={`text-xs font-medium mt-0.5 transition-colors duration-300 text-center leading-tight ${
+              <span className={`text-xs font-medium mt-1 transition-colors duration-300 text-center leading-tight ${
                 item.active ? 'text-purple-400' : 'text-gray-400'
               }`}>
                 {item.label}
@@ -109,9 +110,6 @@ const BottomNav = () => {
           </Link>
         ))}
       </div>
-
-      {/* Safe area for devices with home indicator */}
-      <div className="pb-safe bg-white"></div>
     </div>
   );
 };
