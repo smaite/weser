@@ -45,7 +45,7 @@ const Navbar = () => {
     >
       {/* Top banner - Hidden on mobile */}
       <div className="hidden md:block bg-gradient-to-r from-indigo-600 to-purple-700 text-white text-center py-2 text-sm px-2">
-        📞 Need Help? 071-590849 | 📧 [email protected] | 🚚 Free Delivery on All Orders
+        📞 Need Help? Contact Us | 📧 Glorious Trade Hub | 🎯 Premium Electronics & Tech Solutions
       </div>
       
       <div className="container">

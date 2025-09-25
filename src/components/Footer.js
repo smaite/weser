@@ -17,8 +17,7 @@ const Footer = () => {
               Glorious Trade Hub
             </motion.h3>
             <p className="text-gray-300 text-sm">
-              Your trusted e-commerce destination for quality products at amazing prices. 
-              We're committed to providing exceptional service and value.
+              Your trusted technology partner specializing in premium electronics, CCTV systems, computer components, and mobile accessories. We provide authentic branded products with expert support.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors">
@@ -96,15 +95,19 @@ const Footer = () => {
             <div className="space-y-2 text-sm text-gray-300">
               <div className="flex items-center space-x-2">
                 <i className="fas fa-envelope"></i>
-                <span>support@glorioustradehub.com</span>
+                <span>contact@glorioustradehub.com</span>
               </div>
               <div className="flex items-center space-x-2">
                 <i className="fas fa-phone"></i>
-                <span>+1 (555) 123-4567</span>
+                <span>Available for inquiries</span>
               </div>
               <div className="flex items-center space-x-2">
                 <i className="fas fa-map-marker-alt"></i>
-                <span>123 Commerce Street, Business City</span>
+                <span>Premium Electronics Store</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <i className="fas fa-clock"></i>
+                <span>Expert Tech Support Available</span>
               </div>
             </div>
           </div>
